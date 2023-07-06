@@ -11,3 +11,5 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(handleError);
+
+module.exports = app;
