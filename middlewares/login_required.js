@@ -17,6 +17,7 @@ module.exports = (req, res, next) => {
             result: 'forbidden-approach',
             reason: '로그인한 유저만 접근할 수 있습니다.',
         });
+        return;
     }
 
     // 토큰 검증하기
@@ -33,7 +34,7 @@ module.exports = (req, res, next) => {
     } catch (err) {
         res.status(401).json({
             result: 'forbidden-approach',
-            reason: '유효하지 않은 토근입니다.',
+            reason: '유효하지 않은 토큰입니다.',
         });
     }
 };
