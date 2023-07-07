@@ -1,4 +1,4 @@
-import {Schema} from "mongoose"
+import { Schema } from 'mongoose';
 
 const UserSchema = new Schema (
   {
@@ -40,12 +40,11 @@ role: {
   required: false,
   default: "basic-user",
 },
-  },
 {
   collection: "users",
   timestamps: true,
 }
-  
+  }
 )
 
 export { UserSchema };
