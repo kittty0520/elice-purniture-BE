@@ -40,11 +40,12 @@ role: {
   required: false,
   default: "basic-user",
 },
+  },
 {
   collection: "users",
   timestamps: true,
 }
-  }
+  
 )
 
 export { UserSchema };

@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { Schema } from 'mongoose';
 
 const ProductSchema = new Schema(
@@ -43,4 +44,5 @@ const ProductSchema = new Schema(
     },
 );
 
+// eslint-disable-next-line import/prefer-default-export
 export { ProductSchema };
