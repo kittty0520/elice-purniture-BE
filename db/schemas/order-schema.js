@@ -4,8 +4,8 @@ const OrderSchema = new Schema(
     {
         userNumber: {
             type: Number,
-            ref: 'users',
             required: true,
+            unique: true,
         },
         totalPrice: {
             type: Number,
