@@ -1,7 +1,6 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { Schema } from 'mongoose';
-
-const ProductSchema = new Schema(
+const { Schema } = require("mongoose");
+const AutoIncrement = require('mongoose-sequence')(mongoose);
+const productSchema = new Schema(
     {
         productNumber: {
             type: Number,
@@ -14,14 +13,14 @@ const ProductSchema = new Schema(
         },
         categoryId: {
             type: Schema.Types.ObjectId,
-            ref: 'categorys',
+            ref: 'categories',
             required: true,
         },
         shortDescription: {
             type: String,
             required: true,
         },
-        ProductImageKey: {
+        productImageKey: {
             type: String,
             required: true,
         },
@@ -43,6 +42,5 @@ const ProductSchema = new Schema(
         timestamps: true,
     },
 );
-
-// eslint-disable-next-line import/prefer-default-export
-export { ProductSchema };
+productSchema.plugin(AutoIncrement, { inc_field: 'productNumber' });
+module.exports = productSchema;

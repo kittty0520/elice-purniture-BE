@@ -1,11 +1,16 @@
-import { Schema } from 'mongoose';
-
-const OrderItemSchema = new Schema(
+const { Schema } = require("mongoose");
+const orderItemSchema = new Schema(
     {
-        orderDetailNumber: {
-            type: Number,
+        orderId: {
+            type: Schema.Types.ObjectId,
+            ref: "orders",
             required: true,
-        },
+          },
+          productId: {
+            type: Schema.Types.ObjectId,
+            ref: "products",
+            required: true,
+          },
         productName: {
             type: String,
             required: true,
@@ -20,8 +25,8 @@ const OrderItemSchema = new Schema(
         },
         status: {
             type: String,
-            required: false,
-            default: '상품 준비중',
+            required: true,
+            default: '주문완료',
         },
     },
     {
@@ -30,4 +35,4 @@ const OrderItemSchema = new Schema(
     },
 );
 
-export { OrderItemSchema };
+module.exports = orderItemSchema;

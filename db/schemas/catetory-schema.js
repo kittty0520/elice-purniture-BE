@@ -1,24 +1,15 @@
-import { Schema } from 'mongoose';
-
-const CategorySchema = new Schema(
+const { Schema } = require("mongoose");
+const categorySchema = new Schema(
     {
         title: {
             type: String,
             required: true,
         },
-        themeClass: {
-            type: String,
-            required: true,
-        },
-        imageKey: {
-            type: String,
-            required: true,
-        },
     },
     {
-        collection: 'categorys',
+        collection: 'categories',
         timestamps: true,
     },
 );
 
-export { CategorySchema };
+module.exports = categorySchema;

@@ -1,6 +1,8 @@
-import { Schema } from 'mongoose';
+const { Schema } = require("mongoose");
+const AutoIncrement = require('mongoose-sequence')(mongoose);
+const addressSchema = require("./addressSchema");
 
-const UserSchema = new Schema(
+const userSchema = new Schema(
     {
         userNumber: {
             type: Number,
@@ -24,18 +26,9 @@ const UserSchema = new Schema(
             required: false,
         },
         address: {
-            type: new Schema(
-                {
-                    postalCode: String,
-                    address1: String,
-                    address2: String,
-                },
-                {
-                    _id: false,
-                },
-            ),
-            required: true,
-        },
+            type: addressSchema,
+            required: true
+          },
         role: {
             type: String,
             required: false,
@@ -47,5 +40,5 @@ const UserSchema = new Schema(
         timestamps: true,
     },
 );
-
-export { UserSchema };
+userSchema.plugin(AutoIncrement, { inc_field: 'userNumber' });
+module.exports = userSchema;

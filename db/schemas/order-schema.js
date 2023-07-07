@@ -1,28 +1,18 @@
-import { Schema } from 'mongoose';
-
-const OrderSchema = new Schema(
+const { Schema } = require("mongoose");
+const orderSchema = new Schema(
     {
-        userNumber: {
-            type: Number,
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: 'users',
             required: true,
-            unique: true,
         },
         totalPrice: {
             type: Number,
             required: true,
         },
         address: {
-            type: new Schema(
-                {
-                    postalCode: String,
-                    address1: String,
-                    address2: String,
-                    fullName: String,
-                },
-                {
-                    _id: false,
-                },
-            ),
+            type: Schema.Types.ObjectId,
+            ref: 'addresses',
             required: true,
         },
         orderDate: {
@@ -35,4 +25,4 @@ const OrderSchema = new Schema(
         timestamps: true,
     },
 );
-export { OrderSchema };
+module.exports = orderSchema;
