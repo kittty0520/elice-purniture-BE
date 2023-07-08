@@ -33,4 +33,20 @@ userRouter.post('/register', async (req, res, next) => {
     }
 });
 
+userRouter.post('/login', async (req, res, next) => {
+    try {
+        // request에서 이메일과 패스워드를 가져옴
+        const { email, password } = req.body;
+
+        // userToken과 isAdmin을 가져옴
+        const { userToken, isAdmin } = await userService.getTokenAndRole({
+            email,
+            password,
+        });
+        res.status(200).json({ userToken, isAdmin });
+    } catch (err) {
+        next(err);
+    }
+});
+
 module.exports = userRouter;
