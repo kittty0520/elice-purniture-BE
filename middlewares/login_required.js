@@ -1,6 +1,5 @@
 const jwt = require('../utils/jwt');
 
-
 module.exports = (req, res, next) => {
     // request 헤더로부터 { authorization: 'Bearer jwt-token' }을 받음
     const userToken = req.headers.authorization.split(' ')[1];
@@ -26,9 +25,6 @@ module.exports = (req, res, next) => {
 
         next();
     } catch (err) {
-        res.status(401).json({
-            result: 'forbidden-approach',
-            reason: '잘못된 토큰입니다.',
-        });
+        next(err);
     }
 };
