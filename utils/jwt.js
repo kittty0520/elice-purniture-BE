@@ -17,10 +17,11 @@ const sign = (user) => {
 
 // 사용자의 토큰을 검증함
 const verify = (userToken) => {
-    const decoded = null;
+    let decoded = null;
 
     try {
         decoded = jwt.verify(userToken, secretKey);
+
         return { userId: decoded.userId, role: decoded.role };
     } catch (err) {
         res.status(401).json({
