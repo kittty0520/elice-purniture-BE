@@ -16,13 +16,10 @@ const sign = (user) => {
 
 const verify = (userToken) => {
     const decoded = null;
-    try {
-        decoded = jwt.verify(userToken, secretKey);
 
-        return { userId: decoded.userId, role: decoded.role };
-    } catch (err) {
-        throw new Error();
-    }
+    decoded = jwt.verify(userToken, secretKey);
+
+    return { userId: decoded.userId, role: decoded.role };
 };
 
 module.exports = {
