@@ -1,9 +1,5 @@
-const jwt = require('jsonwebtoken');
+const jwt = require('../utils/jwt');
 
-// .env에 저장된 환경변수를 불러오는 모듈
-require('dotenv').config();
-
-const secretKey = process.env.SECRET || 'secret-Key';
 
 module.exports = (req, res, next) => {
     // request 헤더로부터 { authorization: 'Bearer jwt-token' }을 받음
@@ -21,11 +17,8 @@ module.exports = (req, res, next) => {
     }
 
     // 관리자의 토큰인지를 검증하기
-    const decodedJwt = null;
     try {
-        decodedJwt = jwt.verify(userToken, secretKey);
-
-        const { role } = decodedJwt;
+        const { role } = jwt.verify(userToken);
 
         // 관리자가 아닐때 HTTP403에러 응답
         if (role === 'admin') {
