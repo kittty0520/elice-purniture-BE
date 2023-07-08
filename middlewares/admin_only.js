@@ -1,6 +1,5 @@
 const jwt = require('../utils/jwt');
 
-
 module.exports = (req, res, next) => {
     // request 헤더로부터 { authorization: 'Bearer jwt-token' }을 받음
     const userToken = req.headers.authorization.split(' ')[1];
@@ -21,7 +20,7 @@ module.exports = (req, res, next) => {
         const { role } = jwt.verify(userToken);
 
         // 관리자가 아닐때 HTTP403에러 응답
-        if (role === 'admin') {
+        if (role !== 'admin') {
             console.log('관리자 토큰이 아닙니다.');
             res.status(403).json({
                 result: 'forbidden-approach',
