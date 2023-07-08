@@ -44,4 +44,13 @@ const getTokenAndRole = async (loginInfo) => {
 
     return { userToken, isAdmin };
 };
+
+const getUserData = async (userId) => {
+    const user = await userModel.findById(userId);
+
+    if (!user) {
+        throw new Error('사용자 정보를 찾을 수 없습니다.');
+    }
+    return user;
+};
 module.exports = { addUser, getTokenAndRole };

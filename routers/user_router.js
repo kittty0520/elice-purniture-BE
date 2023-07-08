@@ -4,6 +4,7 @@ const requireLogin = require('../middlewares/login_required');
 const userService = require('../service/user_service');
 const userRouter = Router();
 
+// 회원가입
 userRouter.post('/register', async (req, res, next) => {
     try {
         // request에서 회원정보 가져오기
@@ -33,6 +34,7 @@ userRouter.post('/register', async (req, res, next) => {
     }
 });
 
+//로그인
 userRouter.post('/login', async (req, res, next) => {
     try {
         // request에서 이메일과 패스워드를 가져옴
@@ -49,4 +51,17 @@ userRouter.post('/login', async (req, res, next) => {
     }
 });
 
+//사용자 정보 조회
+userRouter.get('/account', requireLogin, async (req, res, next) => {
+    try {
+        const userId = req.currentUserId;
+        const currentUser = await userService.getUserData(userId);
+
+        res.status(200).json(currentUser);
+    } catch (err) {
+        next(err);
+    }
+});
+
+//
 module.exports = userRouter;
