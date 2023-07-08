@@ -21,7 +21,7 @@ const addUser = async (userInfo) => {
     return createdNewUser;
 };
 const getTokenAndRole = async (loginInfo) => {
-    const { email, password, role } = loginInfo;
+    const { email, password } = loginInfo;
 
     // DB에 이메일이 존재하는지 확인하기
     const user = await userModel.findByEmail(email);
@@ -36,6 +36,7 @@ const getTokenAndRole = async (loginInfo) => {
     }
 
     // JWT 생성하기
+    const role = user.role;
     const userToken = jwt.sign({ email, role });
     //user가 관리자이면 isAdmin을 true로 반환하기
 
