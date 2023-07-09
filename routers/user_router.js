@@ -72,20 +72,17 @@ userRouter.patch('/account', requireLogin, async (req, res, next) => {
 
         const newUserInfo = Object.assign(
             {},
-            fullName && { fullName },
             email && { email },
             password && { password },
+            fullName && { fullName },
             phoneNumber && { phoneNumber },
             postalCode && { postalCode },
             address && { address },
         );
 
-        console.log(newUserInfo);
         // 사용자 정보를 업데이트 하기
         const userId = req.currentUserId;
-        const updateUserInfo = await userService.setUser(userId, {
-            newUserInfo,
-        });
+        const updateUserInfo = await userService.setUser(userId, newUserInfo);
 
         res.status(200).json(updateUserInfo);
     } catch (err) {
@@ -93,5 +90,18 @@ userRouter.patch('/account', requireLogin, async (req, res, next) => {
     }
 });
 
-//
+// 사용자 정보 삭제하기
+userRouter.delete(
+    '/accout',requireLogin,async (req,res,next){
+        try{
+            const userId = req.currentUserId;
+
+            const deletedUser = await userService.deleteUserData(userId);
+
+            res.status(200).json(deletedUser)
+        }catch(err){
+            next(err)
+        }
+    }
+)
 module.exports = userRouter;
