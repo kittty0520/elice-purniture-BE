@@ -46,7 +46,7 @@ const getTokenAndRole = async (loginInfo) => {
 };
 
 const getUserData = async (userId) => {
-    const user = await userModel.findById(userId);
+    const user = await userModel.findByEmail(userId);
 
     if (!user) {
         throw new Error('사용자 정보를 찾을 수 없습니다.');
@@ -57,7 +57,7 @@ const getUserData = async (userId) => {
 // 사용자 정보를 수정
 // 하지만 비밀번호를 확인하지 않고 일단 수정 가능하도록 함.
 const setUser = async (userId, updateUserInfo) => {
-    const user = await userModel.findById(userId);
+    let user = await userModel.findByEmail(userId);
 
     if (!user) {
         throw new Error('사용자 정보가 찾을 수 없습니다.');
