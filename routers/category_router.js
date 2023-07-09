@@ -1,11 +1,11 @@
 const express = require('express');
 const express = require('express');
-const { adminOnly, loginRequired } = require('../middlewares');
+const { adminOnly, requireLogin } = require('../middlewares');
 const { categoryService } = require('../services');
 
 const categoryRouter = express.Router();
 
-categoryRouter.post('/categories', adminOnly, async (req, res, next) => {
+categoryRouter.post('/categories', onlyAdmin, async (req, res, next) => {
   try {
     if (Object.keys(req.body).length === 0) {
       throw new Error(
@@ -37,7 +37,7 @@ categoryRouter.get('/categories', async function (req, res, next) {
 
 categoryRouter.get(
   '/categories/:categoryId',
-  loginRequired,
+  requireLogin,
   async function (req, res, next) {
     try {
       const categoryId = req.params.categoryId;
