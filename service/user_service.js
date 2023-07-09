@@ -58,7 +58,6 @@ const getUserData = async (userId) => {
 // 하지만 비밀번호를 확인하지 않고 일단 수정 가능하도록 함.
 const setUser = async (userId, updateUserInfo) => {
     let user = await userModel.findByEmail(userId);
-
     if (!user) {
         throw new Error('사용자 정보가 찾을 수 없습니다.');
     }
@@ -72,8 +71,22 @@ const setUser = async (userId, updateUserInfo) => {
     }
 
     // DB에 업데이트 된 사용자 정보를 업로드하기
-    user = await userModel.update({ userId, update: updateUserInfo });
+    const updatedUser = await userModel.update({
+        userId,
+        update: updateUserInfo,
+    });
 
-    return user;
+    return updatedUser;
 };
-module.exports = { addUser, getTokenAndRole, getUserData, setUser };
+
+const deleteUserData = async (userId) => {
+    // userId를 _id로 할 것인지 email로 할 것인지, userNumber로 할것인 정한 후 작성하기
+    return userId;
+};
+module.exports = {
+    addUser,
+    getTokenAndRole,
+    getUserData,
+    setUser,
+    deleteUserData,
+};
