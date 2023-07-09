@@ -8,7 +8,7 @@ const secretKey = process.env.SECRET || 'secret-Key';
 // 사용자에게 jwt 토큰을 발급함
 const sign = (user) => {
     const payload = {
-        userId: user.email,
+        userId: user.id,
         role: user.role,
     };
 
