@@ -53,4 +53,27 @@ const getUserData = async (userId) => {
     }
     return user;
 };
-module.exports = { addUser, getTokenAndRole };
+
+// 사용자 정보를 수정
+// 하지만 비밀번호를 확인하지 않고 일단 수정 가능하도록 함.
+const setUser = async (userId, updateUserInfo) => {
+    const user = await userModel.findById(userId);
+
+    if (!user) {
+        throw new Error('사용자 정보가 찾을 수 없습니다.');
+    }
+
+    // 비밀번호를 수정했다면 해쉬화하기
+    const { password } = updateUserInfo;
+
+    if (password) {
+        const newHashedPassword = await bcrypt.hash(password, 8);
+        updateUserInfo.password = newHashedPassword;
+    }
+
+    // DB에 업데이트 된 사용자 정보를 업로드하기
+    user = await userModel.update({ userId, update: updateUserInfo });
+
+    return user;
+};
+module.exports = { addUser, getTokenAndRole, getUserData, setUser };

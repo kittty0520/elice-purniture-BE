@@ -55,9 +55,28 @@ userRouter.post('/login', async (req, res, next) => {
 userRouter.get('/account', requireLogin, async (req, res, next) => {
     try {
         const userId = req.currentUserId;
-        const currentUser = await userService.getUserData(userId);
+        const currentUserData = await userService.getUserData(userId);
 
-        res.status(200).json(currentUser);
+        res.status(200).json(currentUserData);
+    } catch (err) {
+        next(err);
+    }
+});
+
+// 사용자 정보 수정
+userRouter.patch('/account', requireLogin, async (req, res, next) => {
+    try {
+        // request에서 업데이트 할 사용자 정보를 가져옴
+        const requestArray = [...req.body];
+        const filterRequestArray = requestArray.filter((el) => el !== null);
+
+        // 사용자 정보를 업데이트 하기
+        const userId = req.currentUserId;
+        const updateUserInfo = await userService.setUser(userId, {
+            ...filterRequestArray,
+        });
+
+        res.status(200).json(updateUserInfo);
     } catch (err) {
         next(err);
     }
