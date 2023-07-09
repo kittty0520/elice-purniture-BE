@@ -1,9 +1,4 @@
-const jwt = require('jsonwebtoken');
-
-// .env에 저장된 환경변수를 불러오는 모듈
-require('dotenv').config();
-
-const secretKey = process.env.SECRET || 'secret-Key';
+const jwt = require('../utils/jwt');
 
 module.exports = (req, res, next) => {
     // request 헤더로부터 { authorization: 'Bearer jwt-token' }을 받음
@@ -21,20 +16,15 @@ module.exports = (req, res, next) => {
     }
 
     // 토큰 검증하기
-    const decodedJwt = null;
-    try {
-        decodedJwt = jwt.verify(userToken, secretKey);
 
-        const { userId } = decodedJwt;
+    try {
+        const { userId } = jwt.verify(userToken);
 
         // 미들웨어 다음 순서로 실행될 콜백함수에서 사용할 userId
         req.currentUserId = userId;
 
         next();
     } catch (err) {
-        res.status(401).json({
-            result: 'forbidden-approach',
-            reason: '유효하지 않은 토큰입니다.',
-        });
+        next(err);
     }
 };
