@@ -1,5 +1,4 @@
 const express = require('express');
-const express = require('express');
 const { adminOnly, requireLogin } = require('../middlewares');
 const { categoryService } = require('../services');
 
