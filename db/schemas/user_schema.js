@@ -1,6 +1,6 @@
-const { Schema } = require("mongoose");
+const { Schema } = require('mongoose');
 const AutoIncrement = require('mongoose-sequence')(mongoose);
-const addressSchema = require("./addressSchema");
+const addressSchema = require('./addressSchema');
 
 const userSchema = new Schema(
     {

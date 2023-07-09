@@ -1,14 +1,14 @@
-const { Schema } = require("mongoose");
+const { Schema } = require('mongoose');
 const orderItemSchema = new Schema(
     {
         orderId: {
             type: Schema.Types.ObjectId,
-            ref: "orders",
+            ref: 'orders',
             required: true,
           },
           productId: {
             type: Schema.Types.ObjectId,
-            ref: "products",
+            ref: 'products',
             required: true,
           },
         productName: {

@@ -1,4 +1,4 @@
-const { Schema } = require("mongoose");
+const { Schema } = require('mongoose');
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 const productSchema = new Schema(
     {
