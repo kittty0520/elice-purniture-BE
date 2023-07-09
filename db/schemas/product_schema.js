@@ -44,4 +44,3 @@ const productSchema = new Schema(
 );
 
 module.exports = productSchema;
-

@@ -13,4 +13,3 @@ const categorySchema = new Schema(
 );
 
 module.exports = categorySchema;
-

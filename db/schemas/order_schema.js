@@ -26,4 +26,3 @@ const orderSchema = new Schema(
     },
 );
 module.exports = orderSchema;
-
