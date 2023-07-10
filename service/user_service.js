@@ -79,8 +79,8 @@ const setUser = async (userId, updateUserInfo) => {
     return updatedUser;
 };
 
+// TODO: userId를 _id로 할 것인지 email로 할 것인지, userNumber로 할것인 정한 후 작성하기
 const deleteUserData = async (userId) => {
-    // userId를 _id로 할 것인지 email로 할 것인지, userNumber로 할것인 정한 후 작성하기
     return userId;
 };
 
@@ -88,6 +88,8 @@ const getUsers = async () => {
     const users = await userModel.findAll();
     return users;
 };
+
+
 module.exports = {
     addUser,
     getTokenAndRole,
