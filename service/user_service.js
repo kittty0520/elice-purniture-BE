@@ -1,4 +1,4 @@
-const userModel = require('../db/models/user-model');
+const userModel = require('../db/models/user_model');
 const bcrypt = require('bcrypt');
 const jwt = require('../utils/jwt');
 const addUser = async (userInfo) => {
