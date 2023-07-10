@@ -1,6 +1,6 @@
-import { Schema } from 'mongoose';
+const { Schema } = require('mongoose');
 
-const ProductSchema = new Schema(
+const productSchema = new Schema(
     {
         productNumber: {
             type: Number,
@@ -13,14 +13,14 @@ const ProductSchema = new Schema(
         },
         categoryId: {
             type: Schema.Types.ObjectId,
-            ref: 'categorys',
+            ref: 'categories',
             required: true,
         },
         shortDescription: {
             type: String,
             required: true,
         },
-        ProductImageKey: {
+        productImageKey: {
             type: String,
             required: true,
         },
@@ -43,4 +43,4 @@ const ProductSchema = new Schema(
     },
 );
 
-export { ProductSchema };
+module.exports = productSchema;
