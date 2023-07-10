@@ -36,8 +36,9 @@ const getTokenAndRole = async (loginInfo) => {
     }
 
     // JWT 생성하기
+    const userId = user._id;
     const role = user.role;
-    const userToken = jwt.sign({ email, role });
+    const userToken = jwt.sign({ userId, role });
     //user가 관리자이면 isAdmin을 true로 반환하기
 
     const isAdmin = role === 'admin';
@@ -46,7 +47,7 @@ const getTokenAndRole = async (loginInfo) => {
 };
 
 const getUserData = async (userId) => {
-    const user = await userModel.findByEmail(userId);
+    const user = await userModel.findById(userId);
 
     if (!user) {
         throw new Error('사용자 정보를 찾을 수 없습니다.');
@@ -57,7 +58,7 @@ const getUserData = async (userId) => {
 // 사용자 정보를 수정
 // 하지만 비밀번호를 확인하지 않고 일단 수정 가능하도록 함.
 const setUser = async (userId, updateUserInfo) => {
-    let user = await userModel.findByEmail(userId);
+    let user = await userModel.findById(userId);
     if (!user) {
         throw new Error('사용자 정보가 찾을 수 없습니다.');
     }
@@ -90,7 +91,6 @@ const getUsers = async () => {
 };
 const setRole = async (userId, role) => {
     const updatedUser = await userModel.update({ userId, update: { role } });
-
     return updatedUser;
 };
 

@@ -9,7 +9,7 @@ const secretKey = process.env.SECRET || 'secret-Key';
 const sign = (user) => {
     try {
         const payload = {
-            userId: user.email,
+            userId: user.userId,
             role: user.role,
         };
         return jwt.sign(payload, secretKey);
