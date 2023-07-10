@@ -91,17 +91,15 @@ userRouter.patch('/account', requireLogin, async (req, res, next) => {
 });
 
 // 사용자 정보 삭제하기
-userRouter.delete(
-    '/accout',requireLogin,async (req,res,next){
-        try{
-            const userId = req.currentUserId;
+userRouter.delete('/accout', requireLogin, async (req, res, next) => {
+    try {
+        const userId = req.currentUserId;
 
-            const deletedUser = await userService.deleteUserData(userId);
+        const deletedUser = await userService.deleteUserData(userId);
 
-            res.status(200).json(deletedUser)
-        }catch(err){
-            next(err)
-        }
+        res.status(200).json(deletedUser);
+    } catch (err) {
+        next(err);
     }
-)
+});
 module.exports = userRouter;
