@@ -1,9 +1,9 @@
-const model = require('mongoose');
-const ProductSchema = require('../schemas/product-schema');
+const { model } = require('mongoose');
+const ProductSchema = require('../schemas/product_schema');
 
 const Product = model('products', ProductSchema);
 
-export class ProductModel {
+class ProductModel {
     async findByTitle(title) {
         const product = await Product.findOne({ title });
         return product;

@@ -1,12 +1,12 @@
-const model = require('mongoose');
-const CategorySchema = require('../schemas/category-schema');
+const { model } = require('mongoose');
+const CategorySchema = require('../schemas/category_schema');
 
 //import { model } from 'mongoose';
 //import { CategorySchema } from '../schemas/category-schema';
 
 const Category = model('categorys', CategorySchema);
 
-export class CategoryModel {
+class CategoryModel {
     async findByTitle(title) {
         const category = await Category.findOne({ title });
         return category;

@@ -1,9 +1,9 @@
-const model = require('mongoose');
-const OrderSchema = require('../schemas/order-schema');
+const { model } = require('mongoose');
+const OrderSchema = require('../schemas/order_schema');
 
 const Order = model('orders', OrderSchema);
 
-export class OrderModel {
+class OrderModel {
     async findById(orderId) {
         const order = await Order.findOne({ _id: orderId });
         return order;

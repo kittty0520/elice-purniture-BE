@@ -1,14 +1,20 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const handleError = require('./middlewares/error_handler');
-const userRouter = require('./routers/user_router');
+//const userRouter = require('./routers/user_router');
+//const orderItemRouter = require('./routers/order_item_router');
+const orderRouter = require('./routers/order_router');
 
 const app = express();
+
+const { URL } = process.env;
 
 // 임시로 몽고db와 연결하기 위한 코드입니다.
 const PORT = 3000;
 const mongoose = require('mongoose');
-const DB_URL = 'mongodb://localhost:27017/elice-furniture';
+const DB_URL = URL;
 
 // CORS 에러방지
 app.use(cors());
@@ -16,7 +22,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/api', userRouter);
+app.use('/api', orderRouter);
 app.use(handleError);
 
 //임시로 몽고db와 연결하기 위한 코드입니다.
