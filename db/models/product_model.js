@@ -1,5 +1,5 @@
-import { model } from 'mongoose';
-import { ProductSchema } from '../schemas/product-schema';
+const model = require('mongoose');
+const ProductSchema = require('../schemas/product-schema');
 
 const Product = model('products', ProductSchema);
 
@@ -54,4 +54,4 @@ export class ProductModel {
 
 const productModel = new ProductModel();
 
-export { productModel };
+module.exports = productModel;

@@ -1,5 +1,5 @@
-import { model } from 'mongoose';
-import { OrderItemSchema } from '../schemas/order-item-schema';
+const model = require('mongoose');
+const OrderItemSchema = require('../schemas/order-item-schema');
 
 const OrderItem = model('order-items', OrderItemSchema);
 
@@ -49,4 +49,4 @@ export class OrderItemModel {
 
 const orderItemModel = new OrderItemModel();
 
-export { orderItemModel };
+module.exports = orderItemModel;

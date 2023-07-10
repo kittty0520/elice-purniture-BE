@@ -1,5 +1,5 @@
-import { model } from 'mongoose';
-import { OrderSchema } from '../schemas/order-schema';
+const model = require('mongoose');
+const OrderSchema = require('../schemas/order-schema');
 
 const Order = model('orders', OrderSchema);
 
@@ -44,4 +44,4 @@ export class OrderModel {
 
 const orderModel = new OrderModel();
 
-export { orderModel };
+module.exports = orderModel;

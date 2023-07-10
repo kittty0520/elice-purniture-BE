@@ -1,5 +1,8 @@
-import { model } from 'mongoose';
-import { CategorySchema } from '../schemas/category-schema';
+const model = require('mongoose');
+const CategorySchema = require('../schemas/category-schema');
+
+//import { model } from 'mongoose';
+//import { CategorySchema } from '../schemas/category-schema';
 
 const Category = model('categorys', CategorySchema);
 
@@ -44,4 +47,5 @@ export class CategoryModel {
 
 const categoryModel = new CategoryModel();
 
-export { categoryModel };
+//export { categoryModel };
+module.exports = categoryModel;
