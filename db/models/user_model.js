@@ -1,9 +1,9 @@
-const model = require('mongoose');
-const UserSchema = require('../schemas/user-schema');
+const { model } = require('mongoose');
+const UserSchema = require('../schemas/user_schema');
 
 const User = model('users', UserSchema);
 
-export class UserModel {
+class UserModel {
     async findByEmail(email) {
         const user = await User.findOne({ email });
         return user;
