@@ -8,17 +8,7 @@ class CategoryService {
  }
 
 async addCategory(categoryInfo) {
-  const { title } = categoryInfo;
-
-  const category = await this.categoryModel.findByTitle(title);
-  if (category) {
-    throw new Error(
-      '이미 생성된 카테고리 입니다, 다른 카테고리명을 입력해 주세요.'
-    );
-  }
-
-const createdNewCategory = await this.categoryModel.create(categoryInfo)
-
+ const createdNewCategory = await this.categoryModel.create(categoryInfo)
 return createdNewCategory;
 }
 

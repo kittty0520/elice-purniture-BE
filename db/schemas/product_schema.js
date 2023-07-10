@@ -32,10 +32,6 @@ const productSchema = new Schema(
             type: [String],
             required: true,
         },
-        productDate: {
-            type: Date,
-            required: true,
-        },
     },
     {
         collection: 'products',
