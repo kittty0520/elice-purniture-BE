@@ -91,7 +91,7 @@ userRouter.patch('/account', requireLogin, async (req, res, next) => {
 });
 
 // 사용자 정보 삭제하기
-userRouter.delete('/accout', requireLogin, async (req, res, next) => {
+userRouter.delete('/account', requireLogin, async (req, res, next) => {
     try {
         const userId = req.currentUserId;
 
@@ -102,4 +102,15 @@ userRouter.delete('/accout', requireLogin, async (req, res, next) => {
         next(err);
     }
 });
+
+// 관리자 - 모든 사용자의 정보를 조회하기
+userRouter.get('/admin/users', onlyAdmin, async (req, res, next) => {
+    try {
+        const users = await userService.getUsers();
+        res.status(200).json(users);
+    } catch (err) {
+        next(err);
+    }
+});
+
 module.exports = userRouter;
