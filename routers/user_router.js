@@ -113,4 +113,18 @@ userRouter.get('/admin/users', onlyAdmin, async (req, res, next) => {
     }
 });
 
+// 관리자 - 특정 사용자의 role 권한 수정하기
+userRouter.patch('/admin/users/:userId', onlyAdmin, async (req, res, next) => {
+    try {
+        const userId = req.params.userId;
+        const role = req.body.role;
+
+        const updatedUser = await userService.setRole(userId, role);
+
+        res.status(200).json(updatedUser);
+    } catch (err) {
+        next(err);
+    }
+});
+
 module.exports = userRouter;

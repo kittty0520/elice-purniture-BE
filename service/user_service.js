@@ -88,7 +88,11 @@ const getUsers = async () => {
     const users = await userModel.findAll();
     return users;
 };
+const setRole = async (userId, role) => {
+    const updatedUser = await userModel.update({ userId, update: { role } });
 
+    return updatedUser;
+};
 
 module.exports = {
     addUser,
@@ -97,4 +101,5 @@ module.exports = {
     setUser,
     deleteUserData,
     getUsers,
+    setRole,
 };
