@@ -12,7 +12,14 @@ const sign = (user) => {
         role: user.role,
     };
 
-    return jwt.sign(payload, secretKey);
+    try {
+        return jwt.sign(payload, secretKey);
+    } catch (err) {
+        res.status(400).jon({
+            result: 'fail-tokenSign',
+            reason: '사용자의 정보가 제대로 입력되지 않았습니다',
+        });
+    }
 };
 
 // 사용자의 토큰을 검증함
