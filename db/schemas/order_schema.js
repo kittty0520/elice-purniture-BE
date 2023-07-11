@@ -10,10 +10,6 @@ const orderSchema = new Schema(
             type: Number,
             required: true,
         },
-        orderDate: {
-            type: Date,
-            required: true,
-        },
     },
     {
         collection: 'orders',
