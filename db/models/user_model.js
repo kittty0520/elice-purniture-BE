@@ -5,12 +5,14 @@ const User = model('users', UserSchema);
 
 class UserModel {
     async findByEmail(email) {
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }).populate('relatedField');
         return user;
     }
 
     async findById(userId) {
-        const user = await User.findOne({ _id: userId });
+        const user = await User.findOne({ _id: userId }).populate(
+            'relatedField',
+        );
         return user;
     }
 
@@ -20,7 +22,7 @@ class UserModel {
     }
 
     async findAll() {
-        const users = await User.find({});
+        const users = await User.find({}).populate('relatedField');
         return users;
     }
 

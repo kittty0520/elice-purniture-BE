@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const loginRequired = require('../middlewares/login_required');
 const adminOnly = require('../middlewares/admin_only');
-const { orderItemService } = require('../service/order_item_service');
+const orderItemService  = require('../service/order_item_service');
 
 const orderItemRouter = Router();
 

@@ -5,17 +5,23 @@ const OrderItem = model('order_items', OrderItemSchema);
 
 class OrderItemModel {
     async findById(orderItemId) {
-        const orderItem = await OrderItem.findOne({ _id: orderItemId });
+        const orderItem = await OrderItem.findOne({ _id: orderItemId })
+            .populate('orderId')
+            .populate('productId');
         return orderItem;
     }
 
     async findAllByOrderId(orderId) {
-        const orderItems = await OrderItem.find({ orderId });
+        const orderItems = await OrderItem.find({ orderId })
+            .populate('orderId')
+            .populate('productId');
         return orderItems;
     }
 
     async findAllByProductId(productId) {
-        const orderItems = await OrderItem.find({ productId });
+        const orderItems = await OrderItem.find({ productId })
+            .populate('orderId')
+            .populate('productId');
         return orderItems;
     }
 
@@ -25,7 +31,9 @@ class OrderItemModel {
     }
 
     async findAll() {
-        const orderItems = await OrderItem.find({});
+        const orderItems = await OrderItem.find({})
+            .populate('orderId')
+            .populate('productId');
         return orderItems;
     }
 

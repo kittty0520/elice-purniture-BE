@@ -1,8 +1,8 @@
-const express = require('express');
-const { onlyAdmin, requireLogin } = require('../middlewares');
-const { categoryService } = require('../services');
-
-const categoryRouter = express.Router();
+const { Router } = require('express');
+const onlyAdmin = require('../middlewares/admin_only');
+const requireLogin = require('../middlewares/login_required');
+const { categoryService } = require('../service/catetory_service');
+const categoryRouter = Router();
 
 categoryRouter.post('/categories', onlyAdmin, async (req, res, next) => {
   try {
@@ -67,7 +67,7 @@ categoryRouter.patch(
 );
 
 categoryRouter.delete(
-  'categories/:categoryId',
+  '/categories/:categoryId',
   requireLogin,
   async function (req, res, next) {
     try {
