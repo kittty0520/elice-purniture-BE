@@ -1,5 +1,5 @@
 const { model } = require('mongoose');
-const CategorySchema = require('../schemas/catetory_schema');
+const CategorySchema = require('../schemas/category_schema');
 
 //import { model } from 'mongoose';
 //import { CategorySchema } from '../schemas/category-schema';
