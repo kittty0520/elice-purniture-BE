@@ -8,24 +8,16 @@ const userRouter = Router();
 userRouter.post('/register', async (req, res, next) => {
     try {
         // request에서 회원정보 가져오기
-        const {
-            userNumber,
-            fullName,
-            email,
-            password,
-            phoneNumber,
-            postalCode,
-            address,
-        } = req.body;
+        const { email, password, fullName, phoneNumber, address, role } =
+            req.body;
         // 회원 정보를 DB(user collection)에 추가하기
         const user = await userService.addUser({
-            userNumber,
-            fullName,
             email,
             password,
+            fullName,
             phoneNumber,
-            postalCode,
             address,
+            role,
         });
 
         res.status(201).json({ result: 'success-register', user });
