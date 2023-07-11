@@ -1,5 +1,6 @@
-const categoryModel = require('../db').categoryModel;
-const productModel = require('../db').productModel;
+const categoryModel = require('../db/models/category_model')
+const productModel = require('../db/models/product_model')
+
 
 class CategoryService {
   constructor(categoryModel,productModel) {

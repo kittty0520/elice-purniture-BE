@@ -9,6 +9,7 @@ const productSchema = new Schema(
         productName: {
             type: String,
             required: true,
+            unique: true,
         },
         categoryId: {
             type: Schema.Types.ObjectId,
