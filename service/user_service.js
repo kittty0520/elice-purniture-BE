@@ -1,4 +1,4 @@
-const userModel = require('../db/models/user-model');
+const userModel = require('../db/models/user_model');
 const bcrypt = require('bcrypt');
 const jwt = require('../utils/jwt');
 const addUser = async (userInfo) => {
@@ -81,8 +81,9 @@ const setUser = async (userId, updateUserInfo) => {
 };
 
 // TODO: userId를 _id로 할 것인지 email로 할 것인지, userNumber로 할것인 정한 후 작성하기
-const deleteUserData = async (userId) => {
-    return userId;
+const deleteUser = async (userId) => {
+    const deletedUser = await userModel.deleteById(userId);
+    return deletedUser;
 };
 
 const getUsers = async () => {
@@ -99,7 +100,7 @@ module.exports = {
     getTokenAndRole,
     getUserData,
     setUser,
-    deleteUserData,
+    deleteUser,
     getUsers,
     setRole,
 };

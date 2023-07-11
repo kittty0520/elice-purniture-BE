@@ -95,9 +95,9 @@ userRouter.delete('/account', requireLogin, async (req, res, next) => {
     try {
         const userId = req.currentUserId;
 
-        const deletedUser = await userService.deleteUserData(userId);
+        const deletedResult = await userService.deleteUser(userId);
 
-        res.status(200).json(deletedUser);
+        res.status(200).json(deletedResult);
     } catch (err) {
         next(err);
     }
@@ -127,4 +127,14 @@ userRouter.patch('/admin/users/:userId', onlyAdmin, async (req, res, next) => {
     }
 });
 
+// 관리자 - 특정 사용자의 정보를 삭제하기
+userRouter.delete('/admin/users/:userId', onlyAdmin, async (req, res, next) => {
+    try {
+        const userId = req.params.userId;
+        const deleteResult = await userService.deleteUser(userId);
+        res.status(200).json(deleteResult);
+    } catch (err) {
+        next(err);
+    }
+});
 module.exports = userRouter;

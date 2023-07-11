@@ -5,12 +5,12 @@ const Order = model('orders', OrderSchema);
 
 class OrderModel {
     async findById(orderId) {
-        const order = await Order.findOne({ _id: orderId });
+        const order = await Order.findOne({ _id: orderId }).populate('user');
         return order;
     }
 
     async findAllByUserId(userId) {
-        const orders = await Order.find({ userId });
+        const orders = await Order.find({ user: userId }).populate('user');
         return orders;
     }
 
@@ -20,7 +20,7 @@ class OrderModel {
     }
 
     async findAll() {
-        const orders = await Order.find({});
+        const orders = await Order.find({}).populate('user');
         return orders;
     }
 

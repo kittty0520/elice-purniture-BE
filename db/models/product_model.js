@@ -5,22 +5,30 @@ const Product = model('products', ProductSchema);
 
 class ProductModel {
     async findByTitle(title) {
-        const product = await Product.findOne({ title });
+        const product = await Product.findOne({ productName: title }).populate(
+            'categoryId',
+        );
         return product;
     }
 
     async findById(productId) {
-        const product = await Product.findOne({ _id: productId });
+        const product = await Product.findOne({ _id: productId }).populate(
+            'categoryId',
+        );
         return product;
     }
 
     async findOneByCategoryId(categoryId) {
-        const product = await Product.findOne({ categoryId });
+        const product = await Product.findOne({ categoryId }).populate(
+            'categoryId',
+        );
         return product;
     }
 
     async findAllByCategoryId(categoryId) {
-        const products = await Product.find({ categoryId });
+        const products = await Product.find({ categoryId }).populate(
+            'categoryId',
+        );
         return products;
     }
 
@@ -30,7 +38,7 @@ class ProductModel {
     }
 
     async findAll() {
-        const products = await Product.find({});
+        const products = await Product.find({}).populate('categoryId');
         return products;
     }
 
