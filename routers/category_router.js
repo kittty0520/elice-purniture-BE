@@ -1,12 +1,11 @@
 const { Router } = require('express');
 const onlyAdmin = require('../middlewares/admin_only');
-const requireLogin = require('../middlewares/login_required');
 const categoryService = require('../service/catetory_service');
 const categoryRouter = Router();
 
-//TODO - 테스트 후, 주석 해제
+
 categoryRouter.post('/categories',
-// onlyAdmin,
+onlyAdmin,
 async (req, res, next) => {
   try {
     const title = req.body.title;
@@ -48,10 +47,10 @@ categoryRouter.get(
   }
 );
 
-//TODO - 테스트 후, 주석 해제
+
 categoryRouter.patch(
   '/categories/:categoryId',
-  // onlyAdmin,
+  onlyAdmin,
   async function (req, res, next) {
     try {
       const categoryId = req.params.categoryId;
@@ -72,7 +71,7 @@ categoryRouter.patch(
 
 categoryRouter.delete(
   '/categories/:categoryId',
-  // requireLogin,
+  onlyAdmin,
   async function (req, res, next) {
     try {
       const categoryId = req.params.categoryId;

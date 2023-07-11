@@ -1,12 +1,11 @@
 const { Router } = require('express');
 const onlyAdmin = require('../middlewares/admin_only');
-const requireLogin = require('../middlewares/login_required');
 const productService = require('../service/product_service')
 const productRouter = Router();
 
-//TODO - 테스트 후, 주석 해제
+
 productRouter.post("/products",
-//  requireLogin, onlyAdmin,
+ onlyAdmin,
  async (req, res, next) => {
   try {
     // req (request) 에서 데이터 가져오기
@@ -39,7 +38,6 @@ productRouter.post("/products",
 
 productRouter.get(
   "/products",
-  // requireLogin,
   async function (req, res, next) {
     try {
       const products = await productService.getProducts();
@@ -82,8 +80,7 @@ productRouter.get("/products/:productId", async function (req, res, next) {
 
 productRouter.patch(
   "/products/:productId",
-  // requireLogin,
-  // onlyAdmin,
+  onlyAdmin,
   async function (req, res, next) {
     try {  
       const productId = req.params.productId;
@@ -125,8 +122,7 @@ productRouter.patch(
 
 productRouter.delete(
   "/products/:productId",
-  // requireLogin,
-  // onlyAdmin,
+  onlyAdmin,
   async function (req, res, next) {
     try {
       const productId = req.params.productId;
