@@ -1,10 +1,13 @@
 const { Router } = require('express');
 const onlyAdmin = require('../middlewares/admin_only');
 const requireLogin = require('../middlewares/login_required');
-const { categoryService } = require('../service/catetory_service');
+const categoryService = require('../service/catetory_service');
 const categoryRouter = Router();
 
-categoryRouter.post('/categories', onlyAdmin, async (req, res, next) => {
+//TODO - 테스트 후, 주석 해제
+categoryRouter.post('/categories',
+// onlyAdmin,
+async (req, res, next) => {
   try {
     const title = req.body.title;
     const newCategory = await categoryService.addCategory({
@@ -28,9 +31,9 @@ categoryRouter.get('/categories', async function (req, res, next) {
   }
 });
 
+// :categoryId 같이 파라미터로 받는다면 ex)"localhost:3000/api/categories/64ad596db8~~~~"
 categoryRouter.get(
   '/categories/:categoryId',
-  requireLogin,
   async function (req, res, next) {
     try {
       const categoryId = req.params.categoryId;
@@ -45,9 +48,10 @@ categoryRouter.get(
   }
 );
 
+//TODO - 테스트 후, 주석 해제
 categoryRouter.patch(
-  '/categorys/:categoryId',
-  onlyAdmin,
+  '/categories/:categoryId',
+  // onlyAdmin,
   async function (req, res, next) {
     try {
       const categoryId = req.params.categoryId;
@@ -68,7 +72,7 @@ categoryRouter.patch(
 
 categoryRouter.delete(
   '/categories/:categoryId',
-  requireLogin,
+  // requireLogin,
   async function (req, res, next) {
     try {
       const categoryId = req.params.categoryId;

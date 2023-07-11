@@ -1,20 +1,23 @@
 const { Router } = require('express');
 const onlyAdmin = require('../middlewares/admin_only');
 const requireLogin = require('../middlewares/login_required');
-const { productService } = require('../service/product_service')
+const productService = require('../service/product_service')
 const productRouter = Router();
-productRouter.post("/products", requireLogin, onlyAdmin,async (req, res, next) => {
+
+//TODO - 테스트 후, 주석 해제
+productRouter.post("/products",
+//  requireLogin, onlyAdmin,
+ async (req, res, next) => {
   try {
     // req (request) 에서 데이터 가져오기
-    const {
-      productNumber,
-      productName,
-      categoryId,
-      shortDescription,
-      productImageKey,
-      price,
-      searchKeywords
-    } = req.body;
+
+    const productNumber = req.body.productNumber;
+    const productName = req.body.productName;
+    const categoryId = req.body.categoryId;
+    const shortDescription = req.body.shortDescription;
+    const productImageKey = req.body.productImageKey;
+    const price = req.body.price;
+    const searchKeywords = req.body.searchKeywords;
 
     // 위 데이터를 제품 db에 추가하기
     const newProduct = await productService.addProduct({
@@ -27,6 +30,7 @@ productRouter.post("/products", requireLogin, onlyAdmin,async (req, res, next) =
       searchKeywords
     });
 
+
     res.status(201).json(newProduct);
   } catch (error) {
     next(error);
@@ -35,7 +39,7 @@ productRouter.post("/products", requireLogin, onlyAdmin,async (req, res, next) =
 
 productRouter.get(
   "/products",
-  loginRequired,
+  // requireLogin,
   async function (req, res, next) {
     try {
       const products = await productService.getProducts();
@@ -78,10 +82,12 @@ productRouter.get("/products/:productId", async function (req, res, next) {
 
 productRouter.patch(
   "/products/:productId",
-  requireLogin,
-  onlyAdmin,
+  // requireLogin,
+  // onlyAdmin,
   async function (req, res, next) {
     try {  
+      const productId = req.params.productId;
+
       const {
       productNumber,
       productName,
@@ -100,7 +106,6 @@ productRouter.patch(
         ...(categoryId && { categoryId }),
         ...(shortDescription && { shortDescription }),
         ...(productImageKey && { productImageKey }),
-        ...(inventory && { inventory }),
         ...(price && { price }),
         ...(searchKeywords && { searchKeywords }),
       };
@@ -120,8 +125,8 @@ productRouter.patch(
 
 productRouter.delete(
   "/products/:productId",
-  requireLogin,
-  onlyAdmin,
+  // requireLogin,
+  // onlyAdmin,
   async function (req, res, next) {
     try {
       const productId = req.params.productId;
