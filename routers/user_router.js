@@ -129,4 +129,31 @@ userRouter.delete('/admin/users/:userId', onlyAdmin, async (req, res, next) => {
         next(err);
     }
 });
+
+// 주문 시 사용자의 기본 주소지와 다를 경우 사용자 주소 정보를 업데이트 하기
+userRouter.patch('/address', requireLogin, async (req, res, next) => {
+    try {
+        // request에서 업데이트 할 우편번호,주소1,주소2 를 가져옴
+        const { postalCode, address1, address2 } = req.body;
+
+        const newUserAddressInfo = Object.assign(
+            {},
+            postalCode && { postalCode },
+            address1 && { address1 },
+            address2 && { address2 },
+        );
+        console.log(newUserAddressInfo);
+        // 사용자 주소를 업데이트 하기
+        const userId = req.currentUserId;
+        const updateUserInfo = await userService.setUserAddress(
+            userId,
+            newUserAddressInfo,
+        );
+
+        res.status(200).json(updateUserInfo);
+    } catch (err) {
+        next(err);
+    }
+});
+
 module.exports = userRouter;
