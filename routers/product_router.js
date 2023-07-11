@@ -1,35 +1,30 @@
 const { Router } = require('express');
 const onlyAdmin = require('../middlewares/admin_only');
 const requireLogin = require('../middlewares/login_required');
-const { categoryService } = require('../service/catetory_service');
+const { productService } = require('../service/product_service')
 const productRouter = Router();
-productRouter.post("/products", loginRequired, async (req, res, next) => {
+productRouter.post("/products", requireLogin, onlyAdmin,async (req, res, next) => {
   try {
     // req (request) 에서 데이터 가져오기
     const {
-      title,
+      productNumber,
+      productName,
       categoryId,
-      manufacturer,
       shortDescription,
-      detailDescription,
-      imageKey,
-      inventory,
+      productImageKey,
       price,
-      searchKeywords,
-  } = req.body;
+      searchKeywords
+    } = req.body;
 
     // 위 데이터를 제품 db에 추가하기
     const newProduct = await productService.addProduct({
-      title,
+      productNumber,
+      productName,
       categoryId,
-      sellerId,
-      manufacturer,
       shortDescription,
-      detailDescription,
-      imageKey,
-      inventory,
+      productImageKey,
       price,
-      searchKeywords,
+      searchKeywords
     });
 
     res.status(201).json(newProduct);
@@ -51,7 +46,7 @@ productRouter.get(
     }
   }
 );
-
+//todo)
 productRouter.get(
   "/products/category/:categoryTitle",
   async function (req, res, next) {
@@ -83,34 +78,31 @@ productRouter.get("/products/:productId", async function (req, res, next) {
 
 productRouter.patch(
   "/products/:productId",
-  loginRequired,
+  requireLogin,
+  onlyAdmin,
   async function (req, res, next) {
     try {  
       const {
-        productId,
-        title,
-        shortDescription,
-        detailDescription,
-        imageKey,
-        inventory,
-        price,
-        searchKeywords,
-        isRecommended,
-        discountPercent,
+      productNumber,
+      productName,
+      categoryId,
+      shortDescription,
+      productImageKey,
+      price,
+      searchKeywords
     } = req.body;
 
       // 위 데이터가 undefined가 아니라면, 즉, 프론트에서 업데이트를 위해
       // 보내주었다면, 업데이트용 객체에 삽입함.
       const toUpdate = {
-        ...(title && { title }),
+        ...(productNumber && { productNumber }),
+        ...(productName && { productName }),
+        ...(categoryId && { categoryId }),
         ...(shortDescription && { shortDescription }),
-        ...(detailDescription && { detailDescription }),
-        ...(imageKey && { imageKey }),
+        ...(productImageKey && { productImageKey }),
         ...(inventory && { inventory }),
         ...(price && { price }),
         ...(searchKeywords && { searchKeywords }),
-        ...(isRecommended && { isRecommended }),
-        ...(discountPercent && { discountPercent }),
       };
 
       // 제품 정보를 업데이트함.
@@ -128,7 +120,8 @@ productRouter.patch(
 
 productRouter.delete(
   "/products/:productId",
-  loginRequired,
+  requireLogin,
+  onlyAdmin,
   async function (req, res, next) {
     try {
       const productId = req.params.productId;
