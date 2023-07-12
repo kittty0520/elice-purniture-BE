@@ -83,7 +83,7 @@ orderRouter.get(
 );
 
 orderRouter.patch(
-    '/orderslist/:orderId',
+    '/admin/orderslist/:orderId',
     adminOnly,
     async function (req, res, next) {
         try {
@@ -117,7 +117,9 @@ orderRouter.delete(
           
             if ( status === "주문취소" ) {
             const deleteResult = await orderService.deleteOrderData(orderId);
-            res.status(200).json(deleteResult);    
+            res.status(200).json(deleteResult); 
+        } else {
+            res.status(400).json({ message: '주문 취소를 할 수 없습니다. 관리자에게 요청하세요.' });
         };
             
         } catch (error) {
