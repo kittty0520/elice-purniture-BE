@@ -22,6 +22,11 @@ class CategoryModel {
         return createdNewCategory;
     }
 
+    async insertMany(categoriesArray) {
+        const createdNewCategories = await Category.insertMany(categoriesArray);
+        return createdNewCategories;
+    }
+
     async findAll() {
         const categorys = await Category.find({});
         return categorys;
