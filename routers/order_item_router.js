@@ -1,21 +1,15 @@
 const { Router } = require('express');
 const loginRequired = require('../middlewares/login_required');
 const adminOnly = require('../middlewares/admin_only');
-const orderItemService  = require('../service/order_item_service');
+const orderItemService = require('../service/order_item_service');
 
 const orderItemRouter = Router();
 
 orderItemRouter.post('/ordersitem', loginRequired, async (req, res, next) => {
     try {
         // req (request) 에서 데이터 가져오기
-        const {
-            orderId,
-            productId,
-            productName,
-            quantity,
-            totalPrice,
-           
-        } = req.body;
+        const { orderId, productId, productName, quantity, totalPrice } =
+            req.body;
 
         // 위 데이터를 제품 db에 추가하기
         const newOrderItem = await orderItemService.addItem({
@@ -46,7 +40,7 @@ orderItemRouter.get(
     },
 );
 
-// 특정 오더번호의 주문아이템 단일 목록 조회
+// 특정 유저의 주문아이템 단일 목록 조회
 orderItemRouter.get(
     '/ordersitemlist/:orderId',
     loginRequired,

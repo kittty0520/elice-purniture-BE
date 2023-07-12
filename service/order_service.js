@@ -14,13 +14,46 @@ class OrderService {
     async getOrders() {
         const orders = await this.orderModel.findAll();
 
-        return orders;
+        const filteredOrders = orders.map((order) => {
+            const { status, _id, totalPrice, orderDate, user } = order;
+            const { _id: userId, fullName, phoneNumber, address } = user;
+
+            return {
+                status,
+                _id,
+                totalPrice,
+                orderDate,
+                user: {
+                    _id: userId,
+                    fullName,
+                    phoneNumber,
+                    address,
+                },
+            };
+        });
+
+        return filteredOrders;
     }
 
     async getOrdersByUserId(userId) {
         const orders = await this.orderModel.findAllByUserId(userId);
 
-        return orders;
+        const filteredOrders = orders.map((order) => {
+            const { _id, status, user, totalPrice, orderDate } = order;
+            const { fullName, phoneNumber, address } = user;
+
+            return {
+                _id,
+                status,
+                fullName,
+                phoneNumber,
+                address,
+                totalPrice,
+                orderDate,
+            };
+        });
+
+        return filteredOrders;
     }
 
     async setOrder(orderId, toUpdate) {
@@ -35,14 +68,26 @@ class OrderService {
     async getOrderData(orderId) {
         const order = await this.orderModel.findById(orderId);
 
-        // db에서 찾지 못한 경우, 에러 메시지 반환
         if (!order) {
             throw new Error(
                 '해당 id의 주문은 없습니다. 다시 한 번 확인해 주세요.',
             );
         }
 
-        return order;
+        const { _id, status, user, totalPrice, orderDate } = order;
+        const { fullName, phoneNumber, address } = user;
+
+        const filteredOrder = {
+            _id,
+            status,
+            fullName,
+            phoneNumber,
+            address,
+            totalPrice,
+            orderDate,
+        };
+
+        return filteredOrder;
     }
 
     async deleteOrderData(orderId) {
