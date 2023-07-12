@@ -23,6 +23,7 @@ const orderItemSchema = new Schema(
             type: Number,
             required: true,
         },
+
     },
     {
         collection: 'order-items',
