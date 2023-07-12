@@ -5,7 +5,7 @@ const orderItemService  = require('../service/order_item_service');
 
 const orderItemRouter = Router();
 
-orderItemRouter.post('/orderitem', loginRequired, async (req, res, next) => {
+orderItemRouter.post('/ordersitem', loginRequired, async (req, res, next) => {
     try {
         // req (request) 에서 데이터 가져오기
         const {
@@ -14,7 +14,7 @@ orderItemRouter.post('/orderitem', loginRequired, async (req, res, next) => {
             productName,
             quantity,
             totalPrice,
-            status,
+           
         } = req.body;
 
         // 위 데이터를 제품 db에 추가하기
@@ -24,9 +24,7 @@ orderItemRouter.post('/orderitem', loginRequired, async (req, res, next) => {
             productName,
             quantity,
             totalPrice,
-            status,
         });
-
         res.status(201).json(newOrderItem);
     } catch (error) {
         next(error);
@@ -35,7 +33,7 @@ orderItemRouter.post('/orderitem', loginRequired, async (req, res, next) => {
 
 // 전체 주문아이템 목록은 관리자만 조회 가능함
 orderItemRouter.get(
-    '/orderitemlist/all',
+    '/admin/ordersitemlist',
     adminOnly,
     async function (req, res, next) {
         try {
@@ -48,13 +46,13 @@ orderItemRouter.get(
     },
 );
 
-// 특정 오더번호의 주문아이템 목록 조회
+// 특정 오더번호의 주문아이템 단일 목록 조회
 orderItemRouter.get(
-    '/orders/:orderNumber',
+    '/ordersitemlist/:orderId',
     loginRequired,
     async function (req, res, next) {
         try {
-            const orderId = req.params.orderNumber;
+            const orderId = req.params.orderId;
             const orderItems = await orderItemService.getItemsByOrderId(
                 orderId,
             );
@@ -67,12 +65,12 @@ orderItemRouter.get(
 );
 
 orderItemRouter.patch(
-    '/orderitems/:orderItemId',
+    '/ordersitemlist/:ordersItemId',
     loginRequired,
     async function (req, res, next) {
         try {
             // req (request) 에서 데이터 가져오기
-            const orderItemId = req.params.orderItemId;
+            const ordersItemId = req.params.ordersItemId;
             const quantity = req.body.quantity;
             const totalPrice = req.body.totalPrice;
             const status = req.body.status;
@@ -82,12 +80,11 @@ orderItemRouter.patch(
             const toUpdate = {
                 ...(quantity && { quantity }),
                 ...(totalPrice && { totalPrice }),
-                ...(status && { status }),
             };
 
             // 제품 정보를 업데이트함.
             const updatedOrderItem = await orderItemService.setItem(
-                orderItemId,
+                ordersItemId,
                 toUpdate,
             );
 
