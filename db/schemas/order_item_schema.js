@@ -23,11 +23,7 @@ const orderItemSchema = new Schema(
             type: Number,
             required: true,
         },
-        status: {
-            type: String,
-            required: true,
-            default: '주문완료',
-        },
+       
     },
     {
         collection: 'order-items',

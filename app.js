@@ -14,7 +14,7 @@ const { URL } = process.env;
 // 임시로 몽고db와 연결하기 위한 코드입니다.
 const PORT = 3000;
 const mongoose = require('mongoose');
-const DB_URL = URL;
+const DB_URL = 'mongodb+srv://admin2:qwer1234@cluster0.luokzsa.mongodb.net/yourdatabase?retryWrites=true&w=majority';;
 
 // CORS 에러방지
 app.use(cors());

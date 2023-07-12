@@ -9,8 +9,6 @@ productRouter.post("/products",
  async (req, res, next) => {
   try {
     // req (request) 에서 데이터 가져오기
-
-    const productNumber = req.body.productNumber;
     const productName = req.body.productName;
     const categoryId = req.body.categoryId;
     const shortDescription = req.body.shortDescription;
@@ -20,7 +18,6 @@ productRouter.post("/products",
 
     // 위 데이터를 제품 db에 추가하기
     const newProduct = await productService.addProduct({
-      productNumber,
       productName,
       categoryId,
       shortDescription,
@@ -48,7 +45,7 @@ productRouter.get(
     }
   }
 );
-//todo)
+
 productRouter.get(
   "/products/category/:categoryTitle",
   async function (req, res, next) {
@@ -84,9 +81,7 @@ productRouter.patch(
   async function (req, res, next) {
     try {  
       const productId = req.params.productId;
-
       const {
-      productNumber,
       productName,
       categoryId,
       shortDescription,
@@ -98,7 +93,6 @@ productRouter.patch(
       // 위 데이터가 undefined가 아니라면, 즉, 프론트에서 업데이트를 위해
       // 보내주었다면, 업데이트용 객체에 삽입함.
       const toUpdate = {
-        ...(productNumber && { productNumber }),
         ...(productName && { productName }),
         ...(categoryId && { categoryId }),
         ...(shortDescription && { shortDescription }),
