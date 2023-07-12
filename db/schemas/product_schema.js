@@ -1,5 +1,4 @@
 const { Schema } = require('mongoose');
-
 const productSchema = new Schema(
     {
         productNumber: {
@@ -10,6 +9,7 @@ const productSchema = new Schema(
         productName: {
             type: String,
             required: true,
+            unique: true,
         },
         categoryId: {
             type: Schema.Types.ObjectId,
@@ -30,11 +30,7 @@ const productSchema = new Schema(
         },
         searchKeywords: {
             type: [String],
-            required: true,
-        },
-        productDate: {
-            type: Date,
-            required: true,
+            required: false,
         },
     },
     {

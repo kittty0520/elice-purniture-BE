@@ -10,15 +10,6 @@ const orderSchema = new Schema(
             type: Number,
             required: true,
         },
-        address: {
-            type: Schema.Types.ObjectId,
-            ref: 'addresses',
-            required: true,
-        },
-        orderDate: {
-            type: Date,
-            required: true,
-        },
     },
     {
         collection: 'orders',

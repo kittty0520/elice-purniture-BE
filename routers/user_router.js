@@ -91,13 +91,48 @@ userRouter.patch('/account', requireLogin, async (req, res, next) => {
 });
 
 // 사용자 정보 삭제하기
-userRouter.delete('/accout', requireLogin, async (req, res, next) => {
+userRouter.delete('/account', requireLogin, async (req, res, next) => {
     try {
         const userId = req.currentUserId;
 
-        const deletedUser = await userService.deleteUserData(userId);
+        const deletedResult = await userService.deleteUser(userId);
 
-        res.status(200).json(deletedUser);
+        res.status(200).json(deletedResult);
+    } catch (err) {
+        next(err);
+    }
+});
+
+// 관리자 - 모든 사용자의 정보를 조회하기
+userRouter.get('/admin/users', onlyAdmin, async (req, res, next) => {
+    try {
+        const users = await userService.getUsers();
+        res.status(200).json(users);
+    } catch (err) {
+        next(err);
+    }
+});
+
+// 관리자 - 특정 사용자의 role 권한 수정하기
+userRouter.patch('/admin/users/:userId', onlyAdmin, async (req, res, next) => {
+    try {
+        const userId = req.params.userId;
+        const role = req.body.role;
+
+        const updatedUser = await userService.setRole(userId, role);
+
+        res.status(200).json(updatedUser);
+    } catch (err) {
+        next(err);
+    }
+});
+
+// 관리자 - 특정 사용자의 정보를 삭제하기
+userRouter.delete('/admin/users/:userId', onlyAdmin, async (req, res, next) => {
+    try {
+        const userId = req.params.userId;
+        const deleteResult = await userService.deleteUser(userId);
+        res.status(200).json(deleteResult);
     } catch (err) {
         next(err);
     }

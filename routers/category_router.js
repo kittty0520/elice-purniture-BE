@@ -1,18 +1,14 @@
-const express = require('express');
-const { adminOnly, requireLogin } = require('../middlewares');
-const { categoryService } = require('../services');
+const { Router } = require('express');
+const onlyAdmin = require('../middlewares/admin_only');
+const categoryService = require('../service/catetory_service');
+const categoryRouter = Router();
 
-const categoryRouter = express.Router();
 
-categoryRouter.post('/categories', onlyAdmin, async (req, res, next) => {
+categoryRouter.post('/categories',
+onlyAdmin,
+async (req, res, next) => {
   try {
-    if (Object.keys(req.body).length === 0) {
-      throw new Error(
-        'headers의 Content-Type을 application/json으로 설정해주세요.'
-      );
-    }
     const title = req.body.title;
-
     const newCategory = await categoryService.addCategory({
       title,
     });
@@ -34,9 +30,9 @@ categoryRouter.get('/categories', async function (req, res, next) {
   }
 });
 
+// :categoryId 같이 파라미터로 받는다면 ex)"localhost:3000/api/categories/64ad596db8~~~~"
 categoryRouter.get(
   '/categories/:categoryId',
-  requireLogin,
   async function (req, res, next) {
     try {
       const categoryId = req.params.categoryId;
@@ -51,32 +47,21 @@ categoryRouter.get(
   }
 );
 
+
 categoryRouter.patch(
-  '/categorys/:categoryId',
-  adminOnly,
+  '/categories/:categoryId',
+  onlyAdmin,
   async function (req, res, next) {
     try {
-      if (Object.keys(req.body).length === 0) {
-        throw new Error(
-          'headers의 Content-Type을 application/json으로 설정해주세요.'
-        );
-      }
       const categoryId = req.params.categoryId;
       const title = req.body.title;
-      const description = req.body.description;
-      const themeClass = req.body.themeClass;
-      const imageKey = req.body.imageKey;
       const toUpdate = {
         ...(title && { title }),
-        ...(description && { description }),
-        ...(imageKey && { imageKey }),
-        ...(themeClass && { themeClass }),
       };
       const updatedCategory = await categoryService.setCategory(
         categoryId,
         toUpdate
       );
-
       res.status(200).json(updatedCategory);
     } catch (error) {
       next(error);
@@ -85,8 +70,8 @@ categoryRouter.patch(
 );
 
 categoryRouter.delete(
-  'categories/:categoryId',
-  loginRequired,
+  '/categories/:categoryId',
+  onlyAdmin,
   async function (req, res, next) {
     try {
       const categoryId = req.params.categoryId;
@@ -99,4 +84,4 @@ categoryRouter.delete(
   }
 );
 
-export { categoryRouter };
+module.exports = categoryRouter;

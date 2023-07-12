@@ -1,4 +1,4 @@
-const userModel = require('../db/models/user-model');
+const userModel = require('../db/models/user_model');
 const bcrypt = require('bcrypt');
 const jwt = require('../utils/jwt');
 const addUser = async (userInfo) => {
@@ -36,8 +36,9 @@ const getTokenAndRole = async (loginInfo) => {
     }
 
     // JWT 생성하기
+    const userId = user._id;
     const role = user.role;
-    const userToken = jwt.sign({ email, role });
+    const userToken = jwt.sign({ userId, role });
     //user가 관리자이면 isAdmin을 true로 반환하기
 
     const isAdmin = role === 'admin';
@@ -46,7 +47,7 @@ const getTokenAndRole = async (loginInfo) => {
 };
 
 const getUserData = async (userId) => {
-    const user = await userModel.findByEmail(userId);
+    const user = await userModel.findById(userId);
 
     if (!user) {
         throw new Error('사용자 정보를 찾을 수 없습니다.');
@@ -57,7 +58,7 @@ const getUserData = async (userId) => {
 // 사용자 정보를 수정
 // 하지만 비밀번호를 확인하지 않고 일단 수정 가능하도록 함.
 const setUser = async (userId, updateUserInfo) => {
-    let user = await userModel.findByEmail(userId);
+    let user = await userModel.findById(userId);
     if (!user) {
         throw new Error('사용자 정보가 찾을 수 없습니다.');
     }
@@ -79,14 +80,27 @@ const setUser = async (userId, updateUserInfo) => {
     return updatedUser;
 };
 
-const deleteUserData = async (userId) => {
-    // userId를 _id로 할 것인지 email로 할 것인지, userNumber로 할것인 정한 후 작성하기
-    return userId;
+// TODO: userId를 _id로 할 것인지 email로 할 것인지, userNumber로 할것인 정한 후 작성하기
+const deleteUser = async (userId) => {
+    const deletedUser = await userModel.deleteById(userId);
+    return deletedUser;
 };
+
+const getUsers = async () => {
+    const users = await userModel.findAll();
+    return users;
+};
+const setRole = async (userId, role) => {
+    const updatedUser = await userModel.update({ userId, update: { role } });
+    return updatedUser;
+};
+
 module.exports = {
     addUser,
     getTokenAndRole,
     getUserData,
     setUser,
-    deleteUserData,
+    deleteUser,
+    getUsers,
+    setRole,
 };
