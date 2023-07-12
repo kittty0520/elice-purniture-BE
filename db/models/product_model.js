@@ -36,6 +36,10 @@ class ProductModel {
         const createdNewProduct = await Product.create(productInfo);
         return createdNewProduct;
     }
+    async insertMany(productsArray) {
+        const createdNewProducts = await Product.insertMany(productsArray);
+        return createdNewProducts;
+    }
 
     async findAll() {
         const products = await Product.find({}).populate('categoryId');
