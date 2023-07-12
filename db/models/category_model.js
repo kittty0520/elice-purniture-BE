@@ -4,7 +4,7 @@ const CategorySchema = require('../schemas/category_schema');
 //import { model } from 'mongoose';
 //import { CategorySchema } from '../schemas/category-schema';
 
-const Category = model('categorys', CategorySchema);
+const Category = model('categories', CategorySchema);
 
 class CategoryModel {
     async findByTitle(title) {
