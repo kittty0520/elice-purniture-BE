@@ -94,7 +94,14 @@ const setRole = async (userId, role) => {
     const updatedUser = await userModel.update({ userId, update: { role } });
     return updatedUser;
 };
+const setUserAddress = async (userId, updateUserAddressInfo) => {
+    const updatedUser = await userModel.update({
+        userId,
+        update: { address: updateUserAddressInfo },
+    });
 
+    return updatedUser;
+};
 module.exports = {
     addUser,
     getTokenAndRole,
@@ -103,4 +110,5 @@ module.exports = {
     deleteUser,
     getUsers,
     setRole,
+    setUserAddress,
 };
