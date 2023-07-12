@@ -27,7 +27,7 @@ app.use(handleError);
 
 //임시로 몽고db와 연결하기 위한 코드입니다.
 
-mongoose.connect('mongodb://localhost:27017');
+mongoose.connect(DB_URL);
 mongoose.connection.on('connected', () =>
     console.log('정상적으로 MongoDB 서버에 연결되었습니다.  ' + DB_URL),
 );
@@ -38,4 +38,3 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
-

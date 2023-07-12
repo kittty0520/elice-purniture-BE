@@ -30,7 +30,7 @@ const productSchema = new Schema(
         },
         searchKeywords: {
             type: [String],
-            required: true,
+            required: false,
         },
     },
     {
