@@ -8,17 +8,23 @@ const orderItemRouter = Router();
 orderItemRouter.post('/orderitem', loginRequired, async (req, res, next) => {
     try {
         // req (request) 에서 데이터 가져오기
-        const orderId = req.body.orderId;
-        const productId = req.body.productId;
-        const quantity = req.body.quantity;
-        const totalPrice = req.body.totalPrice;
+        const {
+            orderId,
+            productId,
+            productName,
+            quantity,
+            totalPrice,
+            status,
+        } = req.body;
 
         // 위 데이터를 제품 db에 추가하기
         const newOrderItem = await orderItemService.addItem({
             orderId,
             productId,
+            productName,
             quantity,
             totalPrice,
+            status,
         });
 
         res.status(201).json(newOrderItem);
