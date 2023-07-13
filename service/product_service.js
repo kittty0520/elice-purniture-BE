@@ -13,15 +13,13 @@ class ProductService {
   }
 
   async getProducts() {
-    const products = await this.productModel.findAll();
-
+    const products = await this.productModel.findAll(); 
     return products;
   }
 
   async getProductsByCategoryTitle(categoryTitle) {
     const category = await this.categoryModel.findByTitle(categoryTitle);
     const products = await this.productModel.findAllByCategoryId(category._id);
-    
     return products;
   }
 

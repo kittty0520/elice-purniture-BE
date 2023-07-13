@@ -3,12 +3,10 @@ const onlyAdmin = require('../middlewares/admin_only');
 const productService = require('../service/product_service')
 const productRouter = Router();
 
-
 productRouter.post("/products",
- onlyAdmin,
+onlyAdmin,
  async (req, res, next) => {
   try {
-    // req (request) 에서 데이터 가져오기
     const productName = req.body.productName;
     const categoryId = req.body.categoryId;
     const shortDescription = req.body.shortDescription;
@@ -16,7 +14,7 @@ productRouter.post("/products",
     const price = req.body.price;
     const searchKeywords = req.body.searchKeywords;
 
-    // 위 데이터를 제품 db에 추가하기
+ 
     const newProduct = await productService.addProduct({
       productName,
       categoryId,
@@ -50,9 +48,7 @@ productRouter.get(
   "/products/category/:categoryTitle",
   async function (req, res, next) {
     let categoryTitle = req.params.categoryTitle;
-
     try {
-     
       const products = await productService.getProductsByCategoryTitle(
         categoryTitle
       );

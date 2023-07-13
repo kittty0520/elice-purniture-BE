@@ -18,7 +18,6 @@ const PORT = 3000;
 const mongoose = require('mongoose');
 const insertManyRouter = require('./routers/insertMany_router');
 const DB_URL = URL;
-
 mongoose.connect(DB_URL, {
     dbName: 'elice-furniture',
 });

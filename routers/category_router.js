@@ -30,7 +30,6 @@ categoryRouter.get('/categories', async function (req, res, next) {
   }
 });
 
-// :categoryId 같이 파라미터로 받는다면 ex)"localhost:3000/api/categories/64ad596db8~~~~"
 categoryRouter.get(
   '/categories/:categoryId',
   async function (req, res, next) {
