@@ -5,9 +5,7 @@ const Product = model('products', ProductSchema);
 
 class ProductModel {
     async findByTitle(title) {
-        const product = await Product.findOne({ productName: title }).populate(
-            'categoryId',
-        );
+        const product = await Product.findOne({ productName: title });
         return product;
     }
 
