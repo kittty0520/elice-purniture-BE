@@ -23,7 +23,20 @@ class OrderItemService {
     async getItemsByOrderId(orderId) {
         const orderItems = await this.orderItemModel.findAllByOrderId(orderId);
 
-        return orderItems;
+        const simplifiedOrderItems = orderItems.map((item) => ({
+            ordersItemId: item._id,
+            orderId: {
+                orderId: item.orderId._id,
+                totalPrice: item.orderId.totalPrice,
+                status: item.orderId.status,
+            },
+            productName: item.productName,
+            quantity: item.quantity,
+            finalPrice: item.totalPrice,
+            createdAt: item.createdAt,
+        }));
+
+        return simplifiedOrderItems;
     }
 
     async getItemsByProductId(productId) {
