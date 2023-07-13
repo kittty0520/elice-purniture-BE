@@ -40,7 +40,7 @@ orderItemRouter.get(
     },
 );
 
-// 특정 유저의 주문아이템 단일 목록 조회
+// 특정 오더번호로 주문아이템 목록 보기
 orderItemRouter.get(
     '/ordersitemlist/:orderId',
     loginRequired,
@@ -89,9 +89,10 @@ orderItemRouter.patch(
     },
 );
 
+//오더아이템에서 주문삭제 (관리자만 가능)
 orderItemRouter.delete(
-    '/orderitems/:orderItemId',
-    loginRequired,
+    '/admin/ordersitemlist/:orderItemId',
+    adminOnly,
     async function (req, res, next) {
         try {
             const orderItemId = req.params.orderItemId;
