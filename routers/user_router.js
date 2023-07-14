@@ -64,7 +64,7 @@ userRouter.patch('/account', requireLogin, async (req, res, next) => {
 
         const newUserInfo = Object.assign(
             {},
-            email && { email },s
+            email && { email },
             password && { password },
             fullName && { fullName },
             phoneNumber && { phoneNumber },
