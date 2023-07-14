@@ -2,7 +2,8 @@ const jwt = require('../utils/jwt');
 
 module.exports = (req, res, next) => {
     // request 헤더로부터 { authorization: 'Bearer jwt-token' }을 받음
-    const userToken = req.headers.authorization.split(' ')[1];
+    const auth = req.headers.authorization;
+    const userToken = auth?.split(' ')[1];
 
     // 토근이 없을 때 HTTP 401응답
     if (!userToken || userToken === 'null') {
@@ -17,7 +18,7 @@ module.exports = (req, res, next) => {
 
     // 관리자의 토큰인지를 검증하기
     try {
-        const { role } = jwt.verify(userToken);
+        const { role } = jwt.verify(userToken,res);
 
         // 관리자가 아닐때 HTTP403에러 응답
         if (role !== 'admin') {
