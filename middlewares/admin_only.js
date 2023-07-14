@@ -18,7 +18,7 @@ module.exports = (req, res, next) => {
 
     // 관리자의 토큰인지를 검증하기
     try {
-        const { role } = jwt.verify(userToken);
+        const { role } = jwt.verify(userToken,res);
 
         // 관리자가 아닐때 HTTP403에러 응답
         if (role !== 'admin') {
