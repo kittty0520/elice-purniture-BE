@@ -16,7 +16,7 @@ const sign = (user) => {
             algorithm: 'HS256',
             // expiresIn: '2h',
         };
-        return jwt.sign(payload, secretKey, option);
+        return jwt.sign(payload, secretKey);
     } catch (err) {
         res.status(400).json({
             result: 'fail-tokenSign',
@@ -34,19 +34,23 @@ const verify = (userToken, res) => {
 
         return { userId: decoded.userId, role: decoded.role };
     } catch (err) {
-        if (err.message === 'jwt expired') {
-            console.log(err.message);
-            res.status(401).json({
-                result: 'fail-approach',
-                reason: '만료된 토큰입니다. 다시 로그인 해주세요.',
-            });
-        } else {
-            console.log('invalid token');
-            res.status(401).json({
-                result: 'forbidden-approach',
-                reason: '잘못된 토큰입니다.',
-            });
-        }
+        // if (err.message === 'jwt expired') {
+        //     console.log(err.message);
+        //     res.status(401).json({
+        //         result: 'fail-approach',
+        //         reason: '만료된 토큰입니다. 다시 로그인 해주세요.',
+        //     });
+        // } else {
+        //     console.log('invalid token');
+        //     res.status(401).json({
+        //         result: 'forbidden-approach',
+        //         reason: '잘못된 토큰입니다.',
+        //     });
+        // }
+        res.status(401).json({
+            result: 'forbidden-approach',
+            reason: '잘못된 토큰입니다.',
+        });
     }
 };
 
