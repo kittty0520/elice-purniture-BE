@@ -59,25 +59,17 @@ userRouter.get('/account', requireLogin, async (req, res, next) => {
 userRouter.patch('/account', requireLogin, async (req, res, next) => {
     try {
         // request에서 업데이트 할 사용자 정보를 가져옴
-        const {
-            fullName,
-            email,
-            password,
-            phoneNumber,
-            postalCode,
-            address1,
-            address2,
-        } = req.body;
+        const { fullName, email, password, phoneNumber, postalCode, address } =
+            req.body;
 
         const newUserInfo = Object.assign(
             {},
-            email && { email },
+            email && { email },s
             password && { password },
             fullName && { fullName },
             phoneNumber && { phoneNumber },
             postalCode && { postalCode },
-            address1 && { address1 },
-            address2 && { address2 },
+            address && { address },
         );
 
         // 사용자 정보를 업데이트 하기
