@@ -15,20 +15,25 @@ class OrderService {
         const orders = await this.orderModel.findAll();
 
         const filteredOrders = orders.map((order) => {
-            const { status, _id, totalPrice, orderDate, user } = order;
-            const { _id: userId, fullName, phoneNumber, address } = user;
+            const { status, _id, totalPrice, createdAt, user } = order;
+            let userFields = {};
+
+            if (user) {
+                const { _id: userId, fullName, phoneNumber, address } = user;
+                userFields = {
+                    _id: userId,
+                    fullName,
+                    phoneNumber,
+                    address,
+                };
+            }
 
             return {
                 status,
                 _id,
                 totalPrice,
-                orderDate,
-                user: {
-                    _id: userId,
-                    fullName,
-                    phoneNumber,
-                    address,
-                },
+                createdAt,
+                user: userFields,
             };
         });
 
