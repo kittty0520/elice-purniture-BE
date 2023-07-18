@@ -64,7 +64,7 @@ class UserService {
 
     // 사용자 정보를 수정
     // 하지만 비밀번호를 확인하지 않고 일단 수정 가능하도록 함.
-    async setUser(userId, updateUserInfo) {
+    async updateUser(userId, updateUserInfo) {
         let user = await userModel.findById(userId);
         if (!user) {
             throw new Error('사용자 정보를 찾을 수 없습니다.');

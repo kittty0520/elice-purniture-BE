@@ -74,7 +74,7 @@ userRouter.patch('/account', requireLogin, async (req, res, next) => {
 
         // 사용자 정보를 업데이트 하기
         const userId = req.currentUserId;
-        const updateUserInfo = await userService.setUser(userId, newUserInfo);
+        const updateUserInfo = await userService.updateUser(userId, newUserInfo);
 
         res.status(200).json(updateUserInfo);
     } catch (err) {
