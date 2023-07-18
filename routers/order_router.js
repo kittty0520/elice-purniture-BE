@@ -99,7 +99,7 @@ orderRouter.delete(
             const orderData = await orderService.getOrderData(orderId);
             const status = orderData.status; // DB에서 status 값 가져오기
 
-            if (status === '주문취소') {
+            if (status === '주문완료') {
                 const deleteResult = await orderService.deleteOrderData(
                     orderId,
                 );
