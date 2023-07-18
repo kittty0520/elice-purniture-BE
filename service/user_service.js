@@ -44,9 +44,11 @@ class UserService {
         const userId = user._id;
         const role = user.role;
         const userToken = jwt.sign({ userId, role });
-        //user가 관리자이면 isAdmin을 true로 반환하기
 
-        const isAdmin = role === 'admin';
+        // role 확인하기
+        if (role === 'admin') {
+            isAdmin = true;
+        }
 
         return { userToken, isAdmin };
     }
@@ -65,7 +67,7 @@ class UserService {
     async setUser(userId, updateUserInfo) {
         let user = await userModel.findById(userId);
         if (!user) {
-            throw new Error('사용자 정보가 찾을 수 없습니다.');
+            throw new Error('사용자 정보를 찾을 수 없습니다.');
         }
 
         // 비밀번호를 수정했다면 해쉬화하기
@@ -85,7 +87,6 @@ class UserService {
         return updatedUser;
     }
 
-    // TODO: userId를 _id로 할 것인지 email로 할 것인지, userNumber로 할것인 정한 후 작성하기
     async deleteUser(userId) {
         const deletedUser = await userModel.deleteById(userId);
         return deletedUser;
