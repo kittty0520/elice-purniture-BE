@@ -8,24 +8,16 @@ const userRouter = Router();
 userRouter.post('/register', async (req, res, next) => {
     try {
         // request에서 회원정보 가져오기
-        const {
-            userNumber,
-            fullName,
-            email,
-            password,
-            phoneNumber,
-            postalCode,
-            address,
-        } = req.body;
+        const { email, password, fullName, phoneNumber, address, role } =
+            req.body;
         // 회원 정보를 DB(user collection)에 추가하기
         const user = await userService.addUser({
-            userNumber,
-            fullName,
             email,
             password,
+            fullName,
             phoneNumber,
-            postalCode,
             address,
+            role,
         });
 
         res.status(201).json({ result: 'success-register', user });
@@ -104,7 +96,7 @@ userRouter.delete('/account', requireLogin, async (req, res, next) => {
 });
 
 // 관리자 - 모든 사용자의 정보를 조회하기
-userRouter.get('/admin/users', onlyAdmin, async (req, res, next) => {
+userRouter.get('/users', onlyAdmin, async (req, res, next) => {
     try {
         const users = await userService.getUsers();
         res.status(200).json(users);
@@ -114,7 +106,7 @@ userRouter.get('/admin/users', onlyAdmin, async (req, res, next) => {
 });
 
 // 관리자 - 특정 사용자의 role 권한 수정하기
-userRouter.patch('/admin/users/:userId', onlyAdmin, async (req, res, next) => {
+userRouter.patch('/users/:userId', onlyAdmin, async (req, res, next) => {
     try {
         const userId = req.params.userId;
         const role = req.body.role;
@@ -128,7 +120,7 @@ userRouter.patch('/admin/users/:userId', onlyAdmin, async (req, res, next) => {
 });
 
 // 관리자 - 특정 사용자의 정보를 삭제하기
-userRouter.delete('/admin/users/:userId', onlyAdmin, async (req, res, next) => {
+userRouter.delete('/users/:userId', onlyAdmin, async (req, res, next) => {
     try {
         const userId = req.params.userId;
         const deleteResult = await userService.deleteUser(userId);
@@ -137,4 +129,31 @@ userRouter.delete('/admin/users/:userId', onlyAdmin, async (req, res, next) => {
         next(err);
     }
 });
+
+// 주문 시 사용자의 기본 주소지와 다를 경우 사용자 주소 정보를 업데이트 하기
+userRouter.patch('/address', requireLogin, async (req, res, next) => {
+    try {
+        // request에서 업데이트 할 우편번호,주소1,주소2 를 가져옴
+        const { postalCode, address1, address2 } = req.body;
+
+        const newUserAddressInfo = Object.assign(
+            {},
+            postalCode && { postalCode },
+            address1 && { address1 },
+            address2 && { address2 },
+        );
+        console.log(newUserAddressInfo);
+        // 사용자 주소를 업데이트 하기
+        const userId = req.currentUserId;
+        const updateUserInfo = await userService.setUserAddress(
+            userId,
+            newUserAddressInfo,
+        );
+
+        res.status(200).json(updateUserInfo);
+    } catch (err) {
+        next(err);
+    }
+});
+
 module.exports = userRouter;

@@ -1,5 +1,5 @@
-const categoryModel = require('../db/models/category_model').categoryModel;
-const productModel = require('../db/models/product_model').productModel;
+const categoryModel = require('../db/models/category_model');
+const productModel = require('../db/models/product_model');
 
 class ProductService {
   constructor(productModel, categoryModel) {
@@ -45,7 +45,7 @@ class ProductService {
   }
 
   async deleteProductData(productId) {
-    const { deletedCount } = await this.productModel.deleteById(productId);
+    const deletedCount  = await this.productModel.deleteById(productId);
 
     if (deletedCount === 0) {
       throw new Error(`${productId} 제품의 삭제에 실패하였습니다`);
@@ -54,6 +54,7 @@ class ProductService {
     return { result: "success" };
   }
 }
+// const deleteProduct
 
 const productService = new ProductService(productModel, categoryModel);
 

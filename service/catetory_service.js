@@ -63,4 +63,4 @@ if (deletedCount === 0) {
 }
 
 const categoryService = new CategoryService(categoryModel, productModel);
-exports.categoryService = categoryService;
+module.exports = categoryService;

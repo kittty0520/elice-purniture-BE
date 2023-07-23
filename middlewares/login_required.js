@@ -2,7 +2,8 @@ const jwt = require('../utils/jwt');
 
 module.exports = (req, res, next) => {
     // request 헤더로부터 { authorization: 'Bearer jwt-token' }을 받음
-    const userToken = req.headers.authorization.split(' ')[1];
+    const auth = req.headers.authorization;
+    const userToken = auth?.split(' ')[1];
 
     // 토근이 없을 때 HTTP 401응답
     if (!userToken || userToken === 'null') {
@@ -18,11 +19,10 @@ module.exports = (req, res, next) => {
     // 토큰 검증하기
 
     try {
-        const { userId } = jwt.verify(userToken);
+        const { userId } = jwt.verify(userToken, res);
 
         // 미들웨어 다음 순서로 실행될 콜백함수에서 사용할 userId
         req.currentUserId = userId;
-
         next();
     } catch (err) {
         next(err);

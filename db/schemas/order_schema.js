@@ -10,9 +10,10 @@ const orderSchema = new Schema(
             type: Number,
             required: true,
         },
-        orderDate: {
-            type: Date,
+        status: {
+            type: String,
             required: true,
+            default: '주문완료',
         },
     },
     {

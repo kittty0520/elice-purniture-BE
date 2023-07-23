@@ -4,7 +4,7 @@ const CategorySchema = require('../schemas/category_schema');
 //import { model } from 'mongoose';
 //import { CategorySchema } from '../schemas/category-schema';
 
-const Category = model('categorys', CategorySchema);
+const Category = model('categories', CategorySchema);
 
 class CategoryModel {
     async findByTitle(title) {
@@ -20,6 +20,11 @@ class CategoryModel {
     async create(categoryInfo) {
         const createdNewCategory = await Category.create(categoryInfo);
         return createdNewCategory;
+    }
+
+    async insertMany(categoriesArray) {
+        const createdNewCategories = await Category.insertMany(categoriesArray);
+        return createdNewCategories;
     }
 
     async findAll() {

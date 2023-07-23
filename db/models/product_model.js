@@ -5,9 +5,7 @@ const Product = model('products', ProductSchema);
 
 class ProductModel {
     async findByTitle(title) {
-        const product = await Product.findOne({ productName: title }).populate(
-            'categoryId',
-        );
+        const product = await Product.findOne({ productName: title });
         return product;
     }
 
@@ -35,6 +33,10 @@ class ProductModel {
     async create(productInfo) {
         const createdNewProduct = await Product.create(productInfo);
         return createdNewProduct;
+    }
+    async insertMany(productsArray) {
+        const createdNewProducts = await Product.insertMany(productsArray);
+        return createdNewProducts;
     }
 
     async findAll() {
