@@ -20,7 +20,7 @@ userRouter.post('/register', async (req, res, next) => {
             role,
         });
 
-        res.status(201).json({ result: 'success-register', user });
+        res.status(201).json({ result: 'success-register' });
     } catch (err) {
         next(err);
     }
