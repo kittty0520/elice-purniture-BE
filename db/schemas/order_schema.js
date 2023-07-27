@@ -19,7 +19,7 @@ const orderSchema = new Schema(
         },
         address: {
             ...address,
-            require: true,
+            required: true,
         },
     },
     {
