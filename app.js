@@ -36,11 +36,6 @@ app.use(express.urlencoded({ extended: false }));
 // Passport 초기화
 app.use(passport.initialize());
 
-// nginx에서도 해당페이지에 대한 접근을 모두 막아야 됨.
-// app.get('/html/manage_user.html', onlyAdmin, (req, res) => {
-//     res.send('관리자 페이지에 접근하셨습니다.');
-// });
-
 app.use('/api', userRouter);
 app.use('/api', productRouter);
 app.use('/api', categoryRouter);
