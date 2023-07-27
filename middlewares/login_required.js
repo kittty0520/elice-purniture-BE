@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
         console.log('authorization 토큰이 없음');
 
         res.status(401).json({
-            result: 'forbidden-approach',
+            result: 'fail-authentication',
             reason: '로그인한 유저만 접근할 수 있습니다.',
         });
         return;

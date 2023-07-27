@@ -9,12 +9,13 @@ orderRouter.post('/orderslist', loginRequired, async (req, res, next) => {
     try {
         // req (request) 에서 데이터 가져오기
         const userId = req.currentUserId;
-        const { totalPrice, status } = req.body;
+        const { totalPrice, status, address } = req.body;
         // 위 데이터를 제품 db에 추가하기
         const newOrder = await orderService.addOrder({
             user: userId,
             totalPrice,
             status,
+            address,
         });
 
         res.status(201).json(newOrder);

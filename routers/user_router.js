@@ -26,23 +26,6 @@ userRouter.post('/register', async (req, res, next) => {
     }
 });
 
-//로그인
-userRouter.post('/login', async (req, res, next) => {
-    try {
-        // request에서 이메일과 패스워드를 가져옴
-        const { email, password } = req.body;
-
-        // userToken과 isAdmin을 가져옴
-        const { userToken, isAdmin } = await userService.getTokenAndRole({
-            email,
-            password,
-        });
-        res.status(200).json({ userToken, isAdmin });
-    } catch (err) {
-        next(err);
-    }
-});
-
 //사용자 정보 조회
 userRouter.get('/account', requireLogin, async (req, res, next) => {
     try {
@@ -74,7 +57,10 @@ userRouter.patch('/account', requireLogin, async (req, res, next) => {
 
         // 사용자 정보를 업데이트 하기
         const userId = req.currentUserId;
-        const updateUserInfo = await userService.setUser(userId, newUserInfo);
+        const updateUserInfo = await userService.updateUser(
+            userId,
+            newUserInfo,
+        );
 
         res.status(200).json(updateUserInfo);
     } catch (err) {

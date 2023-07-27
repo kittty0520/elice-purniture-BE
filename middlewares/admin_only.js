@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
         console.log('authorization 토큰이 없음');
 
         res.status(401).json({
-            result: 'forbidden-approach',
+            result: 'fail-authentication',
             reason: '로그인한 유저만 접근할 수 있습니다.',
         });
         return;
@@ -18,7 +18,7 @@ module.exports = (req, res, next) => {
 
     // 관리자의 토큰인지를 검증하기
     try {
-        const { role } = jwt.verify(userToken,res);
+        const { role } = jwt.verify(userToken, res);
 
         // 관리자가 아닐때 HTTP403에러 응답
         if (role !== 'admin') {

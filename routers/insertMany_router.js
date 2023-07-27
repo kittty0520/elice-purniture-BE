@@ -3,7 +3,7 @@ const insertManyService = require('../service/insertMany_service');
 const insertManyRouter = Router();
 const onlyAdmin = require('../middlewares/admin_only');
 
-insertManyRouter.post('/addcategories', onlyAdmin, async (req, res, next) => {
+insertManyRouter.post('/manyCategories', onlyAdmin, async (req, res, next) => {
     try {
         const titlesArray = req.body.titlesArray;
 
@@ -17,7 +17,7 @@ insertManyRouter.post('/addcategories', onlyAdmin, async (req, res, next) => {
         next(error);
     }
 });
-insertManyRouter.post('/addproducts', onlyAdmin, async (req, res, next) => {
+insertManyRouter.post('/manyProducts', onlyAdmin, async (req, res, next) => {
     try {
         const productsArray = req.body.productsArray;
 

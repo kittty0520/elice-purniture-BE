@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const secretKey = process.env.SECRET || 'secret-Key';
 
-// 사용자에게 jwt 토큰을 발급함, 유효시간은  2시간으로 설정
+// 사용자에게 jwt 토큰을 발급함
 const sign = (user) => {
     try {
         const payload = {
@@ -43,7 +43,7 @@ const verify = (userToken, res) => {
         // }
         if (error) {
             res.status(401).json({
-                result: 'forbidden-approach',
+                result: 'fail-invalidToken',
                 reason: '잘못된 토큰입니다.',
             });
         }

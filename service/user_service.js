@@ -1,6 +1,5 @@
 const userModel = require('../db/models/user_model');
-const bcrypt = require('bcrypt');
-const jwt = require('../utils/jwt');
+const { hashPassword } = require('../utils/hash_password');
 
 class UserService {
     constructor(userModel) {
@@ -18,37 +17,12 @@ class UserService {
         }
 
         // 비밀번호를 해쉬화하기
-        const hashedPassword = await bcrypt.hash(password, 8);
+        const hashedPassword = await hashPassword(password);
 
         // 새로운 유저의 정보를 DB에 생성하기
         const newUserInfo = { ...userInfo, password: hashedPassword };
         const createdNewUser = await userModel.create(newUserInfo);
         return createdNewUser;
-    }
-    async getTokenAndRole(loginInfo) {
-        const { email, password } = loginInfo;
-
-        // DB에 이메일이 존재하는지 확인하기
-        const user = await userModel.findByEmail(email);
-        if (!user) {
-            throw new Error('해당 이메일은 존재하지 않습니다.');
-        }
-
-        // DB에 저장된 비밀번호와 일치하는지 확인하기
-        const isPasswordMatch = await bcrypt.compare(password, user.password);
-        if (!isPasswordMatch) {
-            throw new Error('올바르지 않은 비밀번호입니다.');
-        }
-
-        // JWT 생성하기
-        const userId = user._id;
-        const role = user.role;
-        const userToken = jwt.sign({ userId, role });
-        //user가 관리자이면 isAdmin을 true로 반환하기
-
-        const isAdmin = role === 'admin';
-
-        return { userToken, isAdmin };
     }
 
     async getUserData(userId) {
@@ -62,17 +36,17 @@ class UserService {
 
     // 사용자 정보를 수정
     // 하지만 비밀번호를 확인하지 않고 일단 수정 가능하도록 함.
-    async setUser(userId, updateUserInfo) {
+    async updateUser(userId, updateUserInfo) {
         let user = await userModel.findById(userId);
         if (!user) {
-            throw new Error('사용자 정보가 찾을 수 없습니다.');
+            throw new Error('사용자 정보를 찾을 수 없습니다.');
         }
 
         // 비밀번호를 수정했다면 해쉬화하기
         const { password } = updateUserInfo;
 
         if (password) {
-            const newHashedPassword = await bcrypt.hash(password, 8);
+            const newHashedPassword = await hashPassword(password);
             updateUserInfo.password = newHashedPassword;
         }
 
@@ -85,7 +59,6 @@ class UserService {
         return updatedUser;
     }
 
-    // TODO: userId를 _id로 할 것인지 email로 할 것인지, userNumber로 할것인 정한 후 작성하기
     async deleteUser(userId) {
         const deletedUser = await userModel.deleteById(userId);
         return deletedUser;
