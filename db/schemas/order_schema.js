@@ -1,4 +1,6 @@
 const { Schema } = require('mongoose');
+const address = require('./types/address');
+
 const orderSchema = new Schema(
     {
         user: {
@@ -14,6 +16,10 @@ const orderSchema = new Schema(
             type: String,
             required: true,
             default: '주문완료',
+        },
+        address: {
+            ...address,
+            require: true,
         },
     },
     {
