@@ -13,7 +13,11 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.3.3",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "passport": "^0.6.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0"
   },
   "name": "back-end",
   "description": "엘리스 SW트랙 1차 프로젝트 1팀 엘리스 퍼니쳐 CRUD 쇼핑몰 Back-End",
