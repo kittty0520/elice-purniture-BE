@@ -1,6 +1,5 @@
 const userModel = require('../db/models/user_model');
-const bcrypt = require('bcrypt');
-const jwt = require('../utils/jwt');
+const { hashPassword } = require('../utils/hash_password');
 
 class UserService {
     constructor(userModel) {
@@ -18,39 +17,12 @@ class UserService {
         }
 
         // 비밀번호를 해쉬화하기
-        const hashedPassword = await bcrypt.hash(password, 8);
+        const hashedPassword = await hashPassword(password);
 
         // 새로운 유저의 정보를 DB에 생성하기
         const newUserInfo = { ...userInfo, password: hashedPassword };
         const createdNewUser = await userModel.create(newUserInfo);
         return createdNewUser;
-    }
-    async getTokenAndRole(loginInfo) {
-        const { email, password } = loginInfo;
-
-        // DB에 이메일이 존재하는지 확인하기
-        const user = await userModel.findByEmail(email);
-        if (!user) {
-            throw new Error('해당 이메일은 존재하지 않습니다.');
-        }
-
-        // DB에 저장된 비밀번호와 일치하는지 확인하기
-        const isPasswordMatch = await bcrypt.compare(password, user.password);
-        if (!isPasswordMatch) {
-            throw new Error('올바르지 않은 비밀번호입니다.');
-        }
-
-        // JWT 생성하기
-        const userId = user._id;
-        const role = user.role;
-        const userToken = jwt.sign({ userId, role });
-
-        // role 확인하기
-        if (role === 'admin') {
-            isAdmin = true;
-        }
-
-        return { userToken, isAdmin };
     }
 
     async getUserData(userId) {
@@ -74,7 +46,7 @@ class UserService {
         const { password } = updateUserInfo;
 
         if (password) {
-            const newHashedPassword = await bcrypt.hash(password, 8);
+            const newHashedPassword = await hashPassword(password);
             updateUserInfo.password = newHashedPassword;
         }
 
