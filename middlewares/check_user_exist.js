@@ -1,5 +1,7 @@
 const userModel = require('../db/models/user_model');
-module.exports = async ({ userId, method }) => {
+//TODO : 두개로 분리하기
+module.exports = async ({ userInfo, method }) => {
+    const { email, userId } = userInfo;
     let user = null;
     if (method === 'email') {
         user = await userModel.findByEmail(email);
