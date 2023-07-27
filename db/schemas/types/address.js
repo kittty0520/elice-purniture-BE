@@ -1,12 +1,16 @@
 const { Schema } = require('mongoose');
 
 const address = {
-    type: {
-        postalCode: String,
-        address1: String,
-        address2: String,
-    },
-
+    type: new Schema(
+        {
+            postalCode: String,
+            address1: String,
+            address2: String,
+        },
+        {
+            _id: false,
+        },
+    ),
     required: false,
 };
 module.exports = address;
