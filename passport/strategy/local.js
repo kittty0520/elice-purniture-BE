@@ -9,7 +9,7 @@ const config = {
 };
 
 async function findUserOrMatchPassword({ email, password }) {
-    const user = await userModel.findByEmail({ email });
+    const user = await userModel.findByEmail(email);
     if (!user) {
         throw new Error('해당 이메일은 존재하지 않습니다.');
     }
@@ -22,7 +22,7 @@ async function findUserOrMatchPassword({ email, password }) {
 }
 module.exports = new LocalStrategy(config, async (email, password, done) => {
     try {
-        const user = findUserOrMatchPassword({ email, password });
+        const user = await findUserOrMatchPassword({ email, password });
         done(null, user);
     } catch (err) {
         done(err, null);
