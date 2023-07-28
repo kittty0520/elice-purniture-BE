@@ -44,11 +44,8 @@ app.use('/api', orderRouter);
 app.use('/api', orderItemRouter);
 app.use('/api', searchRouter);
 app.use('/api', insertManyRouter);
-<<<<<<< HEAD
 app.use('/api', authRouter);
-=======
 app.use('/api', paymentRouter);
->>>>>>> feature-BE-order
 app.use(handleError);
 
 // TODO : 배포후에 지우기
