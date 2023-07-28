@@ -6,7 +6,7 @@ require('dotenv').config();
 const config = {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: '/auth/google/callback',
+    callbackURL: 'http://kdt-sw-5-team01.elicecoding.com/google/callback',
 };
 
 //TODO : 만약 LOCAL 이메일이 구글이메일과 같은 경우에는 어떻게 처리할 것인지 고민해보기

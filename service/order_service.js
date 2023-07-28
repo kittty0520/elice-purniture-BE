@@ -14,51 +14,13 @@ class OrderService {
     async getOrders() {
         const orders = await this.orderModel.findAll();
 
-        const filteredOrders = orders.map((order) => {
-            const { status, _id, totalPrice, createdAt, user } = order;
-            let userFields = {};
-
-            if (user) {
-                const { _id: userId, fullName, phoneNumber, address } = user;
-                userFields = {
-                    _id: userId,
-                    fullName,
-                    phoneNumber,
-                    address,
-                };
-            }
-
-            return {
-                status,
-                _id,
-                totalPrice,
-                createdAt,
-                user: userFields,
-            };
-        });
-
-        return filteredOrders;
+        return orders;
     }
 
     async getOrdersByUserId(userId) {
         const orders = await this.orderModel.findAllByUserId(userId);
 
-        const filteredOrders = orders.map((order) => {
-            const { _id, status, user, totalPrice, orderDate } = order;
-            const { fullName, phoneNumber, address } = user;
-
-            return {
-                _id,
-                status,
-                fullName,
-                phoneNumber,
-                address,
-                totalPrice,
-                orderDate,
-            };
-        });
-
-        return filteredOrders;
+        return orders;
     }
 
     async setOrder(orderId, toUpdate) {
@@ -79,20 +41,7 @@ class OrderService {
             );
         }
 
-        const { _id, status, user, totalPrice, orderDate } = order;
-        const { fullName, phoneNumber, address } = user;
-
-        const filteredOrder = {
-            _id,
-            status,
-            fullName,
-            phoneNumber,
-            address,
-            totalPrice,
-            orderDate,
-        };
-
-        return filteredOrder;
+        return order;
     }
 
     async deleteOrderData(orderId) {

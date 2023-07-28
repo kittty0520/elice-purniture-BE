@@ -10,7 +10,10 @@ class UserModel {
     }
 
     async findById(userId) {
-        const user = await User.findOne({ _id: userId });
+        const user = await User.findOne(
+            { _id: userId },
+            { password: 0, role: 0, __v: 0 },
+        );
         return user;
     }
 
@@ -20,13 +23,16 @@ class UserModel {
     }
 
     async findAll() {
-        const users = await User.find({});
+        const users = await User.find({}, { password: 0, __v: 0 });
         return users;
     }
 
     async update({ userId, update }) {
         const filter = { _id: userId };
-        const option = { returnOriginal: false };
+        const option = {
+            returnOriginal: false,
+            select: { password: 0, __v: 0 },
+        };
 
         const updatedUser = await User.findOneAndUpdate(filter, update, option);
         return updatedUser;
