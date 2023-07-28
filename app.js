@@ -11,6 +11,7 @@ const orderItemRouter = require('./routers/order_item_router');
 const orderRouter = require('./routers/order_router');
 const categoryRouter = require('./routers/category_router');
 const searchRouter = require('./routers/search_router');
+const paymentRouter = require('./routers/payment_router');
 const app = express();
 require('./passport')();
 const { DB_URL, PORT } = process.env;
@@ -43,7 +44,11 @@ app.use('/api', orderRouter);
 app.use('/api', orderItemRouter);
 app.use('/api', searchRouter);
 app.use('/api', insertManyRouter);
+<<<<<<< HEAD
 app.use('/api', authRouter);
+=======
+app.use('/api', paymentRouter);
+>>>>>>> feature-BE-order
 app.use(handleError);
 
 // TODO : 배포후에 지우기
