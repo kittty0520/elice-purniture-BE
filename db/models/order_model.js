@@ -5,12 +5,31 @@ const Order = model('orders', OrderSchema);
 
 class OrderModel {
     async findById(orderId) {
-        const order = await Order.findOne({ _id: orderId }).populate('user');
+        const order = await Order.findOne(
+            { _id: orderId },
+            { updatedAt: 0, __v: 0 },
+        ).populate('user', {
+            password: 0,
+            email: 0,
+            role: 0,
+            createdAt: 0,
+            updatedAt: 0,
+            __v: 0,
+        });
         return order;
     }
 
     async findAllByUserId(userId) {
-        const orders = await Order.find({ user: userId }).populate('user');
+        const orders = await Order.find(
+            { user: userId },
+            { updatedAt: 0, __v: 0 },
+        ).populate('user', {
+            password: 0,
+            email: 0,
+            role: 0,
+            updatedAt: 0,
+            __v: 0,
+        });
         return orders;
     }
 
@@ -20,7 +39,17 @@ class OrderModel {
     }
 
     async findAll() {
-        const orders = await Order.find({}).populate('user');
+        const orders = await Order.find({}, { updatedAt: 0, __v: 0 }).populate(
+            'user',
+            {
+                password: 0,
+                email: 0,
+                role: 0,
+                createdAt: 0,
+                updatedAt: 0,
+                __v: 0,
+            },
+        );
         return orders;
     }
 
