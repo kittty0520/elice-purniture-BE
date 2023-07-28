@@ -5,7 +5,7 @@ const adminOnly = require('../middlewares/admin_only');
 const PaymentService = require('../service/payment_service');
 
 // 결제 생성
-paymentRouter.post('/payment', async (req, res) => {
+paymentRouter.post('/payment', loginRequired, async (req, res) => {
     try {
         const {
             userId,
@@ -36,7 +36,7 @@ paymentRouter.post('/payment', async (req, res) => {
 });
 
 // 결제 조회
-paymentRouter.get('/payment/:paymentId', async (req, res) => {
+paymentRouter.get('/payment/:paymentId', loginRequired, async (req, res) => {
     try {
         const paymentId = req.params.paymentId;
         const foundPayment = await PaymentService.getPayment(paymentId);
