@@ -11,9 +11,7 @@ const config = {
 
 //TODO : 만약 LOCAL 이메일이 구글이메일과 같은 경우에는 어떻게 처리할 것인지 고민해보기
 async function findOrCreateUser({ email, name }) {
-    const user = await userModel.findByEmail({
-        email,
-    });
+    const user = await userModel.findByEmail(email);
 
     if (user) {
         return user;
