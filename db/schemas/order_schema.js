@@ -12,6 +12,14 @@ const orderSchema = new Schema(
             type: Number,
             required: true,
         },
+        receiver: {
+            type: String,
+            required: true,
+        },
+        phoneNumber: {
+            type: String,
+            required: true,
+        },
         status: {
             type: String,
             required: true,
