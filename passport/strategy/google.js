@@ -7,6 +7,7 @@ const config = {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: 'http://kdt-sw-5-team01.elicecoding.com/api/google/callback',
+    // callbackURL: 'http://localhost:3000/api/google/callback',
 };
 
 //TODO : 만약 LOCAL 이메일이 구글이메일과 같은 경우에는 어떻게 처리할 것인지 고민해보기
@@ -33,7 +34,13 @@ module.exports = new GoogleStrategy(
         // console.log(profile);
         try {
             const user = await findOrCreateUser({ email, name });
+            // const { userToken } = await authService.getToken(user);
+            // const options = {
+            //     httpOnly: false,
+            //     sameSite: 'lax',
+            // };
             done(null, user);
+            // done(null, { token: userToken }, options);
         } catch (e) {
             done(e, null);
         }
