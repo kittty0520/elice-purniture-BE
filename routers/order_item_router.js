@@ -8,18 +8,24 @@ const orderItemRouter = Router();
 orderItemRouter.post('/ordersitem', loginRequired, async (req, res, next) => {
     try {
         // req (request) 에서 데이터 가져오기
-        const { orderId, productId, productName, quantity, totalPrice } =
-            req.body;
-
+        // const { orderId, productId, productName, quantity, totalPrice } =
+        //     req.body;
+        const { orderItems } = req.body;
         // 위 데이터를 제품 db에 추가하기
-        const newOrderItem = await orderItemService.addItem({
-            orderId,
-            productId,
-            productName,
-            quantity,
-            totalPrice,
+        orderItems.map(async (item) => {
+            const { orderId, productId, productName, quantity, totalPrice } =
+                item;
+            const newOrderItem = await orderItemService.addItem({
+                orderId,
+                productId,
+                productName,
+                quantity,
+                totalPrice,
+            });
         });
-        res.status(201).json(newOrderItem);
+
+        // res.status(201).json(newOrderItem);
+        res.status(201).json({ result: 'success-order' });
     } catch (error) {
         next(error);
     }
