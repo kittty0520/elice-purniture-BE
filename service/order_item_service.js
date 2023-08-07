@@ -81,6 +81,16 @@ class OrderItemService {
 
         return { result: 'success' };
     }
+
+    async deleteByOrderId(orderId) {
+        try {
+            // 해당 orderId를 참조하는 OrderItem들을 삭제합니다.
+            const result = await this.orderItemModel.deleteMany({ orderId });
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 const orderItemService = new OrderItemService(orderItemModel);

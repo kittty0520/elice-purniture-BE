@@ -60,6 +60,11 @@ class OrderModel {
         const result = await Order.deleteOne({ _id: orderId });
         return result;
     }
+    
+    async deleteOne(filter) {
+        const result = await Order.deleteOne(filter);
+        return result;
+    }
 }
 
 const orderModel = new OrderModel();

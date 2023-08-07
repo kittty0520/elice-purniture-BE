@@ -53,6 +53,11 @@ class OrderItemModel {
         const result = await OrderItem.deleteOne({ _id: orderItemId });
         return result;
     }
+
+    async deleteMany(filter) {
+        const result = await OrderItem.deleteMany(filter);
+        return result;
+    }
 }
 
 const orderItemModel = new OrderItemModel();

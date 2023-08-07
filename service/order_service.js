@@ -1,8 +1,12 @@
 const orderModel = require('../db/models/order_model');
+const orderItemService = require('./order_item_service');
+
 class OrderService {
-    constructor(orderModel) {
+    constructor(orderModel, orderItemService) {
         this.orderModel = orderModel;
+        this.orderItemService = orderItemService;
     }
+
 
     async addOrder(orderInfo) {
         // db에 저장
@@ -45,17 +49,24 @@ class OrderService {
     }
 
     async deleteOrderData(orderId) {
-        const { deletedCount } = await this.orderModel.deleteById(orderId);
+        try {
+            // 해당 orderId를 참조하는 OrderItem들을 먼저 삭제합니다.
+            await this.orderItemService.deleteByOrderId(orderId);
 
-        // 삭제에 실패한 경우, 에러 메시지 반환
-        if (deletedCount === 0) {
-            throw new Error(`${orderId} 주문의 삭제에 실패하였습니다`);
+            // 주문을 삭제합니다.
+            const { deletedCount } = await this.orderModel.deleteOne({ _id: orderId });
+
+            if (deletedCount === 0) {
+                throw new Error(`${orderId} 주문의 삭제에 실패하였습니다`);
+            }
+
+            return { result: 'success' };
+        } catch (error) {
+            throw error;
         }
-
-        return { result: 'success' };
     }
 }
 
-const orderService = new OrderService(orderModel);
+const orderService = new OrderService(orderModel, orderItemService);
 
 module.exports = orderService;
