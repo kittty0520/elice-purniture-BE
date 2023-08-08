@@ -1,5 +1,4 @@
 const searchModel = require('../db/models/search_model');
-const productModel = require('../db/models/product_model');
 
 // TODO: 실행되는지 확인 후 productService에 합치기
 class SearchService {
