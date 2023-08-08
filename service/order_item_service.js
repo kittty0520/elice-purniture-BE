@@ -1,5 +1,6 @@
 const orderItemModel = require('../db/models/order_item_model');
 
+
 class OrderItemService {
     constructor(orderItemModel) {
         this.orderItemModel = orderItemModel;
@@ -70,16 +71,13 @@ class OrderItemService {
     }
 
     async deleteItemData(orderItemId) {
-        const { deletedCount } = await this.orderItemModel.deleteById(
-            orderItemId,
-        );
-
-        // 삭제에 실패한 경우, 에러 메시지 반환
-        if (deletedCount === 0) {
-            throw new Error(`${orderItemId} 주문의 삭제에 실패하였습니다`);
+        try {
+            const deleteResult =
+                await this.orderItemModel.deleteByIdAndRelatedData(orderItemId);
+            return deleteResult;
+        } catch (error) {
+            throw error;
         }
-
-        return { result: 'success' };
     }
 
     async deleteByOrderId(orderId) {

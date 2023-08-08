@@ -106,6 +106,7 @@ orderItemRouter.delete(
                 orderItemId,
             );
 
+            // 삭제 성공 시 200 상태 코드와 성공 메시지를 응답합니다.
             res.status(200).json(deleteResult);
         } catch (error) {
             next(error);
