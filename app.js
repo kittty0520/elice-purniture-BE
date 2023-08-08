@@ -19,7 +19,7 @@ const { DB_URL, PORT } = process.env;
 
 // 몽고db와 연결하기 위한 코드입니다.
 const mongoose = require('mongoose');
-const insertManyRouter = require('./routers/insertMany_router');
+
 const authRouter = require('./routers/auth_router');
 
 mongoose.connect(DB_URL, {
@@ -47,7 +47,6 @@ app.use('/api', categoryRouter);
 app.use('/api', orderRouter);
 app.use('/api', orderItemRouter);
 app.use('/api', searchRouter);
-app.use('/api', insertManyRouter);
 app.use('/api', authRouter);
 app.use('/api', paymentRouter);
 app.use('/api', uploadRouter);
