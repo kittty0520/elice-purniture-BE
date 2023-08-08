@@ -2,8 +2,6 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-const serverRoot = path.resolve(process.cwd());
-
 const publicDirectory = './public';
 if (!fs.existsSync(publicDirectory)) {
     fs.mkdirSync(publicDirectory);
@@ -16,7 +14,7 @@ if (!fs.existsSync(uploadDirectory)) {
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, '/public/upload');
+        cb(null, './public/upload');
     },
     filename: (req, file, cb) => {
         cb(null, new Date().getTime() + '_' + file.originalname);
