@@ -4,6 +4,11 @@ const fs = require('fs');
 
 const serverRoot = path.resolve(process.cwd());
 
+const publicDirectory = './public';
+if (!fs.existsSync(publicDirectory)) {
+    fs.mkdirSync(publicDirectory);
+}
+
 const uploadDirectory = './public/upload';
 if (!fs.existsSync(uploadDirectory)) {
     fs.mkdirSync(uploadDirectory);
