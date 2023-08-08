@@ -4,7 +4,7 @@ const uploadRouter = Router();
 
 uploadRouter.post('/upload', upload.single('productImg'), (req, res, next) => {
     if (req.file) {
-        const imageUrl = req.file;
+        const imageUrl = '/upload' + req.file.filename;
         // const imageUrl = req.file.path;
         res.status(201).json({ result: 'success-upload', imageUrl });
     } else {
