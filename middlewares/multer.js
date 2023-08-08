@@ -2,7 +2,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-const serverRoot = path.resolve(process.cwd());
+// const serverRoot = path.resolve(process.cwd());
 
 const publicDirectory = './public';
 if (!fs.existsSync(publicDirectory)) {
@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
         cb(null, './public/upload');
     },
     filename: (req, file, cb) => {
-        cb(null, new Date().getTime() + '_' + file.originalname);
+        cb(null, file.originalname);
     },
 });
 const limits = {
