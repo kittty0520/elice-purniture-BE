@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const passport = require('passport');
 const handleError = require('./middlewares/error_handler');
 const onlyAdmin = require('./middlewares/admin_only');
