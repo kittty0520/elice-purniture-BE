@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const passport = require('passport');
 const handleError = require('./middlewares/error_handler');
 const onlyAdmin = require('./middlewares/admin_only');
@@ -13,13 +14,14 @@ const categoryRouter = require('./routers/category_router');
 const searchRouter = require('./routers/search_router');
 const paymentRouter = require('./routers/payment_router');
 const duplicateRouter = require('./routers/duplicate_router');
+const uploadRouter = require('./routers/upload_router');
 const app = express();
 require('./passport')();
 const { DB_URL, PORT } = process.env;
 
 // 몽고db와 연결하기 위한 코드입니다.
 const mongoose = require('mongoose');
-const insertManyRouter = require('./routers/insertMany_router');
+
 const authRouter = require('./routers/auth_router');
 
 mongoose.connect(DB_URL, {
@@ -35,6 +37,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// 정적 파일 제공
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Passport 초기화
 app.use(passport.initialize());
 
@@ -44,10 +49,10 @@ app.use('/api', categoryRouter);
 app.use('/api', orderRouter);
 app.use('/api', orderItemRouter);
 app.use('/api', searchRouter);
-app.use('/api', insertManyRouter);
 app.use('/api', authRouter);
 app.use('/api', paymentRouter);
 app.use('/api', duplicateRouter);
+app.use('/api', uploadRouter);
 app.use(handleError);
 
 // TODO : 배포후에 지우기

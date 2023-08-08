@@ -4,6 +4,9 @@ const UserSchema = require('../schemas/user_schema');
 const User = model('users', UserSchema);
 
 class UserModel {
+    constructor() {
+        this.userProjection = { password: 0, __v: 0 };
+    }
     async findByEmail(email) {
         const user = await User.findOne({ email });
         return user;
@@ -12,7 +15,7 @@ class UserModel {
     async findById(userId) {
         const user = await User.findOne(
             { _id: userId },
-            { password: 0, role: 0, __v: 0 },
+            { ...this.userProjection, role: 0 },
         );
         return user;
     }
@@ -23,7 +26,7 @@ class UserModel {
     }
 
     async findAll() {
-        const users = await User.find({}, { password: 0, __v: 0 });
+        const users = await User.find({}, this.userProjection);
         return users;
     }
 
@@ -31,7 +34,7 @@ class UserModel {
         const filter = { _id: userId };
         const option = {
             returnOriginal: false,
-            select: { password: 0, __v: 0 },
+            select: this.userProjection,
         };
 
         const updatedUser = await User.findOneAndUpdate(filter, update, option);
