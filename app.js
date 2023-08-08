@@ -12,6 +12,7 @@ const orderRouter = require('./routers/order_router');
 const categoryRouter = require('./routers/category_router');
 const searchRouter = require('./routers/search_router');
 const paymentRouter = require('./routers/payment_router');
+const uploadRouter = require('./routers/upload_router');
 const app = express();
 require('./passport')();
 const { DB_URL, PORT } = process.env;
@@ -34,6 +35,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// 정적 파일 제공
+app.use(express.static('public'));
+
 // Passport 초기화
 app.use(passport.initialize());
 
@@ -46,10 +50,11 @@ app.use('/api', searchRouter);
 app.use('/api', insertManyRouter);
 app.use('/api', authRouter);
 app.use('/api', paymentRouter);
+app.use('/api', uploadRouter);
 app.use(handleError);
 
 // TODO : 배포후에 지우기
-app.listen(PORT, () => {
+app.listen(3000, () => {
     console.log(`서버가 ${PORT}에서 실행중입니다.`);
 });
 
