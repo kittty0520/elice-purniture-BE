@@ -16,7 +16,7 @@ if (!fs.existsSync(uploadDirectory)) {
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, '/public/upload');
+        cb(null, serverRoot + '/public/upload');
     },
     filename: (req, file, cb) => {
         cb(null, new Date().getTime() + '_' + file.originalname);
