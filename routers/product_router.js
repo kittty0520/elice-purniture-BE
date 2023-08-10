@@ -128,5 +128,16 @@ productRouter.delete(
     }
   }
 );
+productRouter.get('/search', async (req, res, next) => {
+  try {
+      const searchKeyword = req.query.keyword;
+      const searchProducts = await productService.getProductsByKeyword(
+          searchKeyword,
+      );
 
+      res.status(200).json(searchProducts);
+  } catch (err) {
+      next(err);
+  }
+});
 module.exports = productRouter;

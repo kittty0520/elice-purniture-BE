@@ -5,10 +5,7 @@ class SearchService {
     constructor(searchModel) {
         this.searchModel = searchModel;
     }
-    async getProductsByKeyword(keyword) {
-        const products = await this.searchModel.findAllBykeyword(keyword);
-        return products;
-    }
+    
 }
 
 const searchService = new SearchService(searchModel);
