@@ -5,6 +5,10 @@ class UserService {
     constructor(userModel) {
         this.userModel = userModel;
     }
+    async checkEmail(email) {
+        const user = await userModel.findByEmail(email);
+        return !!user; // 이미 존재하면 true, 없으면 false 반환
+    }
     async addUser(userInfo) {
         const { email, password } = userInfo;
 

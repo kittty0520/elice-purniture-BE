@@ -4,6 +4,17 @@ const requireLogin = require('../middlewares/login_required');
 const userService = require('../service/user_service');
 const userRouter = Router();
 
+// 이메일 중복확인
+userRouter.get('/checkemail', async (req, res, next) => {
+    try {
+        const { email } = req.query;
+        const isEmailTaken = await userService.checkEmail(email);
+        res.status(200).json({ isEmailTaken });
+    } catch (err) {
+        next(err);
+    }
+});
+
 // 회원가입
 userRouter.post('/register', async (req, res, next) => {
     try {
